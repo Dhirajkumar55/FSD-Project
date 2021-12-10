@@ -2,6 +2,7 @@ import { ContextProvider } from '../context'
 
 import "../styles/header.css";
 
+
 function MyApp({ Component, pageProps }) {
   return (
     <ContextProvider>
