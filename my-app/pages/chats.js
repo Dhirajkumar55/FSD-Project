@@ -1,12 +1,12 @@
 
 
-import Sidebar from '../components/chatpage/Sidebar'
+import ChatPage from '../components/chatpage/ChatPage'
 
 function Chats(){
 
     return (
         <div>
-            <Sidebar/>
+            <ChatPage/>
         </div>
     )
 }
