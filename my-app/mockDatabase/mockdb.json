@@ -1,0 +1,52 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Something",
+      "goal": "something",
+      "description": "something",
+      "membercount": "4",
+      "duration": "6",
+      "weeklyhrs": "4",
+      "skills": [
+        "HTML",
+        "CSS",
+        "JS"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Something1",
+      "goal": "something1",
+      "description": "something1",
+      "membercount": "5",
+      "duration": "7",
+      "weeklyhrs": "5",
+      "skills": [
+        "HTML5",
+        "CSS3",
+        "JSX"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Mario",
+      "goal": "Don't know",
+      "description": "hello",
+      "membercount": "3",
+      "duration": "12",
+      "weeklyhrs": "15",
+      "skills": []
+    },
+    {
+      "id": "TKce4n7",
+      "title": "",
+      "goal": "",
+      "description": "",
+      "membercount": "",
+      "duration": "",
+      "weeklyhrs": "",
+      "skills": []
+    }
+  ]
+}
