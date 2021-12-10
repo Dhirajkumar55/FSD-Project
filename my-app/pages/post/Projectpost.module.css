@@ -1,0 +1,13 @@
+.div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.label{
+    margin : 0.5rem;
+}
+.input{
+    border-radius:0.2rem;
+    
+}
