@@ -116,6 +116,15 @@ function SignUp() {
             >
               Sign Up
             </Button>
+            <a style={{padding:"12rem"}}>Or</a>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up With Google
+            </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="signIn" variant="body2">

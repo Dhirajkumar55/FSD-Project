@@ -6,10 +6,11 @@
 .navbar-container{
     background-color: #EFEFEF;
     width : 100%vh;
-    height : 5rem;
+    height : 3rem;
     display: inline-flexbox;
-    padding-top:1.5rem;
+    padding-top:1rem;
     padding-right:1rem;
+    padding-bottom: 1rem;
     justify-content: space-evenly;
 }
 

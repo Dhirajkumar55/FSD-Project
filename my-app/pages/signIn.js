@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {auth,provider} from '../firebase'
+import { signInWithPopup } from 'firebase/auth';
 
 function Copyright(props) {
   return (
@@ -26,17 +28,26 @@ function Copyright(props) {
   );
 }
 
+
+
+
 const theme = createTheme();
 
 function SignIn() {
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    signInWithPopup(auth, provider)
+    
+
+
+    // const data = new FormData(event.currentTarget);
+    // // eslint-disable-next-line no-console
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
 
   return (
@@ -89,6 +100,15 @@ function SignIn() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+            <a style={{padding:"12rem"}}>Or</a>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign in With Google
             </Button>
             <Grid container>
               <Grid item xs>

@@ -1,7 +1,8 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp,getApp, getApps, FirebaseApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged , GoogleAuthProvider} from "firebase/auth";
 
-
+let app;
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -15,5 +16,17 @@ const firebaseConfig = {
   };
 
 
+if(getApps.length){
+  app = getApp();
+} else{
+  app = initializeApp(firebaseConfig);
+}
 
-const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+onAuthStateChanged(auth, user => {
+  // Check for user status
+});
+const provider = new GoogleAuthProvider();
+
+export {db,auth,provider};
