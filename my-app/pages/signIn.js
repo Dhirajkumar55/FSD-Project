@@ -12,8 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {auth,provider} from '../firebase'
-import { signInWithPopup } from 'firebase/auth';
+// import {useAuth} from "../context/AuthUserContext"
+import {signInWithPopup} from 'firebase/auth'
+import {auth,db,provider} from '../firebase'
+
+
 
 function Copyright(props) {
   return (
@@ -34,11 +37,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 function SignIn() {
-
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    signInWithPopup(auth, provider)
+    signInWithPopup(auth,provider)
     
 
 
