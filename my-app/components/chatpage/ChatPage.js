@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
-import ChatsScreen from "./ChatScreen";
+import ChatsScreen from "./ChatsScreen";
 
 
 function ChatPage(){

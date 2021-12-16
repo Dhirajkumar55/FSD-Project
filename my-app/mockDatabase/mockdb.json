@@ -2,45 +2,13 @@
   "posts": [
     {
       "id": "1",
-      "title": "Something hello",
-      "goal": "something how do you do",
-      "description": "something nothing",
-      "membercount": "43",
-      "duration": "61",
-      "weeklyhrs": "42",
-      "skills": [
-        "HTML",
-        "CSS",
-        "JS"
-      ]
-    },
-    {
-      "id": "2",
-      "title": "Something1",
-      "goal": "something1",
-      "description": "something1",
+      "title": "Grocery App",
+      "goal": "To develop an end to end application using MERN stack, and deploy it using herouku",
+      "description": "To completely develop and end to end web application, where users will be able to select various grocery products at low prices, and these groceries are added to the app based on availiability for which we will develop an admin app, such that the admin can aproove the products.",
       "membercount": "5",
-      "duration": "7",
-      "weeklyhrs": "5",
-      "skills": [
-        "HTML5",
-        "CSS3",
-        "JSX"
-      ]
-    },
-    {
-      "id": "6",
-      "title": "sfwerbnere",
-      "goal": "gsdsafgdbsda",
-      "description": "sdgsgdsb",
-      "membercount": "16",
-      "duration": "12",
-      "weeklyhrs": "115",
-      "skills": [
-        "HTML5",
-        "CSS3",
-        "JSX"
-      ]
+      "duration": "10",
+      "weeklyhrs": "14",
+      "skills": []
     }
   ]
 }

@@ -31,8 +31,23 @@
 }
 #btndiv{
     display:flex;
-    flex-direction:row;
-    justify-content:space-around;
-    padding-left:80rem;
-    padding-top:2rem;
+    flex-direction:column;
+    justify-content:space-between;
+    margin:
+}
+
+.bluebtn{
+    margin:1rem 35rem;
+    padding:0.75rem 2rem;
+    text-align:center;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color:#0e9fff;
+    color:#fff;
+    cursor: pointer;
+}
+
+.bluebtn:hover{
+    background-color:#0e9fffcb;
 }

@@ -54,8 +54,8 @@ function Postid(){
                     // postdata.skills.map((skill)=><div id={styles.insideSkilldiv} key={order++}>{skill}</div>)
                 }</div>
                 <div id={styles.btndiv}>
-                    <button onClick={()=>router.push(`/post/modify/${postid}`)}>Modify</button>
-                    <button onClick={deletehandle}>Delete</button>
+                    <button className = {styles.bluebtn}onClick={()=>router.push(`/post/modify/${postid}`)}>Modify</button>
+                    <button className = {styles.bluebtn}onClick={deletehandle}>Delete</button>
                 </div>
               </div>
           </div>

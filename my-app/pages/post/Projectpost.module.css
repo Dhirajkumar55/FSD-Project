@@ -1,22 +1,29 @@
 .div{
-    margin-top:10rem;
-    padding-top:3rem;
+    align-items: center;
     display: inline-block;
-    position:relative;
-    margin-left:40rem;
+    padding:1.5rem;
     background-color:#F8F8F8;
-    border:1px soliid #D0D0D0
+    border:1px soliid #D0D0D0;
+    border-radius:0.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .innerdiv{
     margin:1rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding:0.2rem 2rem;
 }
 .label{
     margin : 0.5rem;
 }
 .input{
-    border-radius:0.2rem;
+    border-radius:0.5rem;
+    padding:1rem;
+    border: solid 1px #0e9fffc5;
 }
 
 .bold{
@@ -24,6 +31,17 @@
 }
 .btn{
     margin-left:9rem;
-    width:3rem;
-    height:1.5rem
-;}
+    padding:0.75rem 2rem;
+    text-align:center;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color:#0e9fff;
+    color:#fff;
+    cursor: pointer;
+}
+
+.btn:hover{
+    background-color:#0e9fffcb;
+}
+
