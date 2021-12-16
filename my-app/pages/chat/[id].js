@@ -40,14 +40,15 @@ function Chat(){
     if(!user) return <SignUp/>
     else{
         return (
-            
-            <Container>
-                <Sidebar/>
-                <ChatsContainer>
-                    <ChatsScreen/>
-                </ChatsContainer>
-            </Container>
-            
+            <div>
+                <Navbar/>
+                <Container>
+                    <Sidebar/>
+                    <ChatsContainer>
+                        <ChatsScreen/>
+                    </ChatsContainer>
+                </Container>
+            </div>
         )
     }
 }

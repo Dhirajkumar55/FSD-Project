@@ -17,7 +17,7 @@ function Banner(){
                     <h1 style = {{"fontSize":"3.5rem","fontWeight":"normal"}}>Grow Together ....</h1>
                     <SameContainer>
                         <h1 style = {{"fontSize":"2rem","fontWeight":"normal","paddingTop":"3.75rem"}}>So let's find you a team</h1>
-                        <a href = "">
+                        <a href='post'>
                             <WhiteButton>Let's Go</WhiteButton>
                          </a>
                     </SameContainer>

@@ -19,7 +19,7 @@ function Post(){
 
     return (
          <div>
-             {
+            {
             data.map((post)=><Singlepost {...post} key={post.id}/>)
             }
          </div>

@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import {useAuth} from "../context/AuthUserContext"
 import {signInWithPopup} from 'firebase/auth'
 import {auth,db,provider} from '../firebase'
-
+import {useRouter} from 'next/router'
 
 
 function Copyright(props) {
@@ -38,10 +38,11 @@ const theme = createTheme();
 
 function SignIn() {
   
+  const router = useRouter();
   const handleSubmit = (event) => {
     event.preventDefault();
     signInWithPopup(auth,provider)
-    
+    router.push('/');
 
 
     // const data = new FormData(event.currentTarget);
