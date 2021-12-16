@@ -1,0 +1,38 @@
+.bodydiv{
+    display :flex;
+    flex-direction: column;
+    margin-left:2rem;
+    margin-right:2rem;
+    padding-top:1rem;
+}
+#title{
+    text-align:center;
+}
+.smallestdiv{
+    padding-left:3rem;
+    font-weight:400;
+    word-spacing:0.5rem;
+    line-height:2rem;
+    font-size:1.2rem;
+}
+.time{
+    font-size:1.2rem;
+    font-weight:400;
+}
+#skilldiv{
+    display:flex;
+    flex-direction:row;
+    margin-left:2rem;
+}
+#insideSkilldiv{
+    font-weight:500;
+    margin-left:1.5rem;
+    font-size:1.2rem;
+}
+#btndiv{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    padding-left:80rem;
+    padding-top:2rem;
+}

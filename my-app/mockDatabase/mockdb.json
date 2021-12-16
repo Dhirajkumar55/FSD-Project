@@ -2,12 +2,12 @@
   "posts": [
     {
       "id": "1",
-      "title": "Something",
-      "goal": "something",
-      "description": "something",
-      "membercount": "4",
-      "duration": "6",
-      "weeklyhrs": "4",
+      "title": "Something hello",
+      "goal": "something how do you do",
+      "description": "something nothing",
+      "membercount": "43",
+      "duration": "61",
+      "weeklyhrs": "42",
       "skills": [
         "HTML",
         "CSS",
@@ -36,17 +36,11 @@
       "membercount": "16",
       "duration": "12",
       "weeklyhrs": "115",
-      "skills": []
-    },
-    {
-      "id": "14",
-      "title": "Shankr",
-      "goal": "Their is no goal",
-      "description": "hello we are there",
-      "membercount": "15",
-      "duration": "16",
-      "weeklyhrs": "10",
-      "skills": []
+      "skills": [
+        "HTML5",
+        "CSS3",
+        "JSX"
+      ]
     }
   ]
 }
