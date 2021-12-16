@@ -4,7 +4,6 @@ import ChatPage from '../../components/chatpage/ChatPage'
 import Navbar from "../../components/navbar/Navbar";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth,provider,db} from "../../firebase";
-import {useAuth} from "../../context/AuthUserContext"
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs } from "firebase/firestore";
 import SignUp from "../signUp";
 import Loading from '../../components/chatpage/Loading'
