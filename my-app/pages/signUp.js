@@ -38,7 +38,7 @@ function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     signInWithPopup(auth, provider);
-
+    router.push('/');
 
     // const data = new FormData(event.currentTarget);
     // // eslint-disable-next-line no-console
