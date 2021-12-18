@@ -30,11 +30,11 @@ function ChatsScreen(){
             </MessageContainer>
 
 
-            <InputContainer>
+            <InputContainer onSubmit = {e => e.preventDefault()}>
                 <IconButton color="primary">
                     <InsertEmoticonIcon/>
                 </IconButton>
-                <InputBox placeholder="Type Something..."/>
+                <InputBox  placeholder="Type Something..."/>
             </InputContainer>
         </Container>
     )

@@ -17,8 +17,10 @@ function Sidebar(){
 
     const [user] = useAuthState(auth);
     const userChatRef = query(collection(db,'chats'), where('users', 'array-contains',user?.email));
+    //console.log("userChatRef: ", userChatRef);
 
     const [chatsSnapshot] = useCollection(userChatRef);
+    //console.log("chatSnapShot: ", chatsSnapshot);
 
     const createChat = ()=>{
         const input = prompt("please enter a user's email");
