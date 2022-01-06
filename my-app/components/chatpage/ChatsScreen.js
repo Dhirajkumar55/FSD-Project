@@ -25,9 +25,6 @@ function ChatsScreen({chat, messages}){
     const [messagesSnapshot] = useCollection(query(collection(userRef, 'messages'),orderBy('timestamp','asc')));
     const showMessages = () => {
         if(messagesSnapshot){
-
-            messagesSnapshot.docs.forEach(doc => console.log(doc.data().timestamp));
-
             return messagesSnapshot.docs.map(message => {
                     return <Message
                         key={message.id}

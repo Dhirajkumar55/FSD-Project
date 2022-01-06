@@ -6,6 +6,7 @@ import moment from "moment";
 function Message({user, message}){
     const [userLoggedIn] = useAuthState(auth);
     const TypeofMessage = user === userLoggedIn.email ? Sender:Receiver;
+	const Timestamp = user === userLoggedIn.email ? SenderTimestamp:ReceiverTimestamp;
 
     return (
         <Container>
@@ -33,7 +34,7 @@ const MessageElement = styled.p`
 	margin: 0.5rem;
 	min-width: 2rem;
     max-width: 20rem;
-	padding-bottom: 1.3rem;
+	padding-bottom: 1.5rem;
 	position: relative;
 	font-size:1.1rem;
 `;
@@ -50,10 +51,20 @@ const Receiver = styled(MessageElement)`
 	text-align: left;
 `;
 
-const Timestamp = styled.span`
+const SenderTimestamp = styled.span`
 	padding: 0.5rem;
-	font-size: 0.8rem;
+	font-size: 0.7rem;
+	bottom: 0;
+	left: 0;
+	text-align: right;
+	position:absolute;
+`;
+
+const ReceiverTimestamp = styled.span`
+	padding: 0.5rem;
+	font-size: 0.7rem;
 	bottom: 0;
 	right: 0;
 	text-align: right;
+	position:absolute;
 `;
