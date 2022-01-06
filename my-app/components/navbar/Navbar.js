@@ -2,11 +2,12 @@ import React from "react";
 import {useAuthState} from 'react-firebase-hooks/auth'
 import {auth} from '../../firebase';
 import {signOut} from 'firebase/auth'
+import Link from "next/link";
 
 
 function Navbar(props){
 
-    const [user,setUser] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     function LoggedInUser(){
         return (

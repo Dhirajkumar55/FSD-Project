@@ -4,7 +4,7 @@ import ChatPage from '../../components/chatpage/ChatPage'
 import Navbar from "../../components/navbar/Navbar";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth,provider,db} from "../../firebase";
-import { doc,serverTimestamp,setDoc, query, where, collection, getDocs } from "firebase/firestore";
+import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs } from "firebase/firestore";
 import SignUp from "../signUp";
 import Loading from '../../components/chatpage/Loading'
 import Sidebar from '../../components/chatpage/Sidebar';
@@ -14,15 +14,13 @@ import {useRouter} from 'next/router'
 
 
 
-function Chat(){
+function Chat({chat, messages}){
     const router =  useRouter();
     const id=router.query.id;
-    const ref =  getDocs(collection(db,'chats'));
-    console.log("ref: ",ref)
+    const ref =  doc(collection(db,'chats'),router.query.id);
 
-    console.log(id);
+    // console.log(id);
     const [user,loading] = useAuthState(auth)
-    console.log(user);
 
     useEffect(()=>{
         if(user){
@@ -44,7 +42,7 @@ function Chat(){
                 <Container>
                     <Sidebar/>
                     <ChatsContainer>
-                        <ChatsScreen/>
+                        <ChatsScreen chat={chat} messages={messages}/>
                     </ChatsContainer>
                 </Container>
             </div>
@@ -55,10 +53,35 @@ function Chat(){
 
 export default Chat;
 
-// export async function getServerSideProps(context){
-//     const ref = doc(collection(db,'chats'));
+export async function getServerSideProps(context){
+    const chatRef = doc(collection(db,'chats'),context.query.id);
 
-// }
+    const messagesRes = await getDocs(query(collection(chatRef,'messages'),orderBy('timestamp','asc')));
+
+    // console.log("type: ",typeof messagesRes.docs);
+    // const messages = await onSnapshot(messagesRes, (doc)=>{
+    //     console.log("doc data: ",doc.data());
+    // })
+    const messages = messagesRes.docs.map(message => ({
+        id: message.id,
+        ...message.data()
+    })).map(message => ({
+        ...message,
+        timestamp: message.timestamp?.toDate().getTime()
+    }));
+
+    const chatSnapShot = await getDoc(chatRef);
+
+    const chat = {
+        id: chatSnapShot.id,
+        ...chatSnapShot.data()
+    }
+
+    return {
+        props:{ chat, messages: JSON.stringify(messages) },
+    };
+
+}
 
 
 const Container = styled.div`
@@ -67,12 +90,12 @@ const Container = styled.div`
 
 const ChatsContainer = styled.div`
     flex: 1;
-    height:100vh
-    overflow: scroll;
+    height:100vh;
+    ::-webkit-scrollbar {
+		display: none !important;
+	}
+	-ms-overflow-style: none !important; /* IE and Edge */
+	scrollbar-width: none !important; /* Firefox */
 
-    ::-webkit-scrollbar{
-        display : none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width:none;
+    
 `;
