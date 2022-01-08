@@ -5,11 +5,11 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from "react-firebase-hooks/firestore"
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc} from "firebase/firestore";
 import styles from  "./createpost.module.css"
-import { router } from 'json-server';
+import {useRouter} from 'next/router';
 
 
 function CreatePost(){
-
+    const router = useRouter();
     const [user] = useAuthState(auth);
     console.log(user?.email);
     const [newpost,setNewpost] = useState({
@@ -43,7 +43,6 @@ function CreatePost(){
     }
 
     return (
-        <PostContainer>
             <div className={styles.div}>
             <form onSubmit={handlesubmit}>
                 <div className={styles.innerdiv}>
@@ -87,13 +86,9 @@ function CreatePost(){
                 </div>
             </form>
         </div>
-        </PostContainer>
     )
 
 }
 
 export default CreatePost;
 
-const PostContainer = styled.div`
-
-`;
