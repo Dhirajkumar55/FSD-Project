@@ -76,9 +76,6 @@ function ChatsScreen({chat, messages}){
     const recipientEmail = getRecipientEmail(chat.users, user);
     const recipient = recipientSnapshot?.docs?.[0]?.data();
 
-
-
-
     return(
         <Container>
             <Header>

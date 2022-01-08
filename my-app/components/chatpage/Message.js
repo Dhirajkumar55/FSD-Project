@@ -10,8 +10,6 @@ function Message({user, message}){
 
     return (
         <Container>
-            {/* {message.message}
-            {message.timestamp?moment(message.timestamp).format('LT'): "..."} */}
            <TypeofMessage>
                {message.message}
                <Timestamp>

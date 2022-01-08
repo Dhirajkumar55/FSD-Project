@@ -1,6 +1,3 @@
-
-
-
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import NavBar from "../../components/navbar/Navbar.js";
@@ -76,7 +73,7 @@ function Post() {
                   transition: "all .3s ease 0s",
                 }}
               >
-                <span style={{ textTransform: "capitalise" }}>proLab</span>
+                <span style={{ textTransform: "capitalise" }}>proSpaces</span>
                 <em></em>{" "}
               </h2>
             </a>
