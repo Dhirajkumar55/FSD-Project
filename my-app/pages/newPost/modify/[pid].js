@@ -107,7 +107,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                 </form>
                 </div>
             ):(
-                <h1>You are not allowed to this page</h1>
+                <Restricted/>
             )
         }
         </div>
