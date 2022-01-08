@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react';
 import {useRouter} from 'next/router'
-import {db} from '../../../firebase';
+import {db,auth} from '../../../firebase';
 import styled from 'styled-components';
 import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from "react-firebase-hooks/firestore";
