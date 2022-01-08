@@ -2,7 +2,7 @@
     display :flex;
     flex-direction: row;
     padding:2rem;
-    background-color: #fdfefffa;
+    background-color: #f5f9fffa;
     border: none;
     border-radius: 0.5rem;
 }
