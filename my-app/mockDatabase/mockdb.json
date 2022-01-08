@@ -1,13 +1,13 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "Grocery App",
-      "goal": "To develop an end to end application using MERN stack, and deploy it using herouku",
-      "description": "To completely develop and end to end web application, where users will be able to select various grocery products at low prices, and these groceries are added to the app based on availiability for which we will develop an admin app, such that the admin can aproove the products.",
-      "membercount": "5",
-      "duration": "10",
-      "weeklyhrs": "14",
+      "id": "2",
+      "title": "Hi",
+      "goal": "I want to develop a app for blid people",
+      "description": "I want to develop a app for blid people",
+      "membercount": "3",
+      "duration": "4",
+      "weeklyhrs": "12",
       "skills": []
     }
   ]

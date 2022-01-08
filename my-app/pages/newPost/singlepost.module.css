@@ -1,15 +1,42 @@
 .bodydiv{
     display :flex;
+    flex-direction: row;
+    padding:2rem;
+    background-color: rgba(245, 245, 245, 0.5);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.innerdiv{
+    display:flex;
     flex-direction: column;
-    margin-left:2rem;
-    margin-right:2rem;
+    justify-content: space-between;
+    width: 90vh;
+    align-items: left;
+    border-right: 0.1rem solid #0e9fff91;
+}
+
+.rightInnerdiv{
+    display:flex;
+    flex-direction: column;
+    width: 90vh;
+    align-items: left;
+    padding-left: 2rem;
     padding-top:1rem;
+}
+
+.hr{
+    margin-top:0rem;
+    margin-bottom:0rem;
+    border-top: 0.2rem solid #0e9fff;
+    border-bottom: none;
 }
 #title{
     text-align:center;
 }
 .smallestdiv{
     padding-left:3rem;
+    padding-right:2rem;
     font-weight:400;
     word-spacing:0.5rem;
     line-height:2rem;
@@ -30,13 +57,11 @@
     font-size:1.2rem;
 }
 #btndiv{
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
+    align-items:center;
+    padding:2rem 18rem;
 }
 
 .bluebtn{
-    margin:1rem 35rem;
     padding:0.75rem 2rem;
     text-align:center;
     font-size: 1.5rem;
@@ -51,4 +76,6 @@
     background-color:#0e9fffcb;
 }
 
-
+.container{
+    
+}

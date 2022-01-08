@@ -17,8 +17,10 @@ function Sidebar(){
 
     const [user] = useAuthState(auth);
     const userChatRef = query(collection(db,'chats'), where('users', 'array-contains',user?.email));
+    //console.log("userChatRef: ", userChatRef);
 
     const [chatsSnapshot] = useCollection(userChatRef);
+    //console.log("chatSnapShot: ", chatsSnapshot);
 
     const createChat = ()=>{
         const input = prompt("please enter a user's email");
@@ -42,7 +44,7 @@ function Sidebar(){
         <Container>
             <Header>
                 <TopContainer>
-                    <UserAvatar src = {user?.photoURL}onClick={() => createChat()}/>
+                    <UserAvatar src = {user?.photoURL} onClick={() => createChat()}/>
                     <IconsContainer>
                         <IconButton color="primary">
                             <ChatIcon/>
@@ -84,6 +86,11 @@ const Container = styled.div`
    min-width: 17rem;
    max-width:20rem;
    padding:0.5rem;
+   ::-webkit-scrollbar {
+		display: none !important;
+	}
+	-ms-overflow-style: none !important; /* IE and Edge */
+	scrollbar-width: none !important; /* Firefox */
 `;
 
 const Header = styled.div`
@@ -92,7 +99,6 @@ const Header = styled.div`
     top: 0;
     background-color:white;
     z-index:1;
-    
     align-items: center;
     padding:1rem 0.5rem;
     
@@ -116,11 +122,6 @@ const UserAvatar = styled(Avatar)`
 
 const IconsContainer = styled.div``;
 
-const SearchContainer = styled.div`
-    position: fixed;
-    align-items: center;
-    flex :1;
-`;
 
 const Search = styled.div`
     display: flex;

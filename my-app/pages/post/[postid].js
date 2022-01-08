@@ -1,7 +1,7 @@
 import styles from "./singlepost.module.css"
 import { Router, useRouter } from "next/router";
 import {useEffect,useState} from "react";
-import Navbar from "../../components/navbar/Navbar"
+import Navbar from "../../components/navbar/Navbar";
 
 function Postid(){
     const router=useRouter();
@@ -37,28 +37,29 @@ function Postid(){
     }
 
     return (
-        <div id={styles.maindiv}>
+        <div>
           <Navbar/>
-          <div className={styles.bodydiv}>
-              <h1 id={styles.title}>{postdata.title}</h1>
-              <div className> 
-                <h2>Goal</h2>
-                <div className={styles.smallestdiv}>{postdata.goal}</div>
-                <h2>Duration of Project:  <span className={styles.time}> {postdata.duration} weeks</span></h2>
-                <h2>Weekly Hours:  <span className={styles.time}> {postdata.weeklyhrs} hours</span></h2>
-                <h2>Total Members:  <span style={{fontWeight:"300"}}> {postdata.membercount}</span></h2>
-                <h2>Description</h2>
-                <div className={styles.smallestdiv}>{postdata.description}</div>
-                <h2>Skills</h2>
-                <div id={styles.skilldiv}>{
-                    // postdata.skills.map((skill)=><div id={styles.insideSkilldiv} key={order++}>{skill}</div>)
-                }</div>
-                <div id={styles.btndiv}>
-                    <button className = {styles.bluebtn}onClick={()=>router.push(`/post/modify/${postid}`)}>Modify</button>
-                    <button className = {styles.bluebtn}onClick={deletehandle}>Delete</button>
+          <div className></div>
+            <div className={styles.bodydiv}>
+                <h1 id={styles.title}>{postdata.title}</h1>
+                <div className> 
+                    <h2>Goal</h2>
+                    <div className={styles.smallestdiv}>{postdata.goal}</div>
+                    <h2>Duration of Project:  <span className={styles.time}> {postdata.duration} weeks</span></h2>
+                    <h2>Weekly Hours:  <span className={styles.time}> {postdata.weeklyhrs} hours</span></h2>
+                    <h2>Total Members:  <span style={{fontWeight:"300"}}> {postdata.membercount}</span></h2>
+                    <h2>Description</h2>
+                    <div className={styles.smallestdiv}>{postdata.description}</div>
+                    <h2>Skills</h2>
+                    <div id={styles.skilldiv}>{
+                        // postdata.skills.map((skill)=><div id={styles.insideSkilldiv} key={order++}>{skill}</div>)
+                    }</div>
+                    <div id={styles.btndiv}>
+                        <button className = {styles.bluebtn}onClick={()=>router.push(`/post/modify/${postid}`)}>Modify</button>
+                        <button className = {styles.bluebtn}onClick={deletehandle}>Delete</button>
+                    </div>
                 </div>
-              </div>
-          </div>
+            </div>
         </div>
     )
 }
