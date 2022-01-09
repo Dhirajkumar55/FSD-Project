@@ -171,7 +171,7 @@ function Posts() {
                     transition: "all 0.3s",
                   }}
                 >
-                  <Link href="/post/Projectpost">
+                  <Link href="/newPost/createPost">
                     <a className="nav-link">newpost</a>
                   </Link>
                 </li>

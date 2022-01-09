@@ -4,7 +4,12 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc} from "firebase/firestore";
 import styles from  "./singlepost.module.css";
 import {useRouter} from 'next/router';
+import {useState}  from "react"
 import Navbar from "../../components/navbar/Navbar"
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,name,photo,timestamp}){
 
@@ -12,12 +17,51 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
     const router = useRouter();
 
     const docRef = doc(collection(db, 'posts'),router.query.id);
+    const [mdl,setMdl]=useState(false);
+    const [applyformdata,setApplyformdata] = useState({
+        ques1:"",
+        ques2:"",
+        ques3:""
+    })
 
     const modifyFunctionality = ()=>{
         if(user?.email === userid){
             return  <button className = {styles.bluebtn} onClick={()=>router.push(`/newPost/modify/${router.query.id}`)}>Modify</button>
         }
     }
+    const applyDataHandle=(e)=>{
+        let name = e.target.name;
+        let value = e.target.value;
+        setApplyformdata({...applyformdata,[name]:value})
+        console.log(applyformdata)
+    }
+    function handleApply(e){
+        e.preventDefault();
+        const applyRef=collection(docRef,"AppliedBy");
+        addDoc(applyRef,{
+           ...applyformdata,
+           timestamp:serverTimestamp(),
+           name:user?.displayName,
+           photo:user?.photoURL,
+           userid:user?.email
+        })
+        setMdl(false)
+    }
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        borderRadius:2,
+        display: "flex",
+        flexDirection: 'column',
+      };
 
     return <div>
         <div >
@@ -33,12 +77,33 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
                 
                
                 <h2>Skills</h2>
-                <div id={styles.skilldiv}>{
-                    // postdata.skills.map((skill)=><div id={styles.insideSkilldiv} key={order++}>{skill}</div>)
+                <div id={styles.skilldiv}>
+                    {
+                    skills.map((skill)=><div id={styles.insideSkilldiv} key={router.query.id}>{skill}</div>)
                 }</div>
                 <div id={styles.btndiv}>
                     {modifyFunctionality()}
                     {/* <button className = {styles.bluebtn}onClick={deletehandle}>Delete</button> */}
+                </div>
+                <div>
+                <Button variant="contained" color="success" size="medium" onClick={()=>{setMdl(true),console.log(mdl);}}>Apply</Button>
+                <Modal open={mdl} onClose={()=>{setMdl(false)}} aria-labelledby="modal-modal-title"aria-describedby="modal-modal-description">
+                    <Box sx={style}>
+                    <div style={{"display":"flex","flexDirection":"column","margin":"1rem 0rem 1rem 0rem"}}>
+                        <p>What are the skills you have in the given jobpost?</p>
+                        <TextField id="standard-basic" label="answer" name="ques1" variant="standard" type="string" onChange={applyDataHandle}/>
+                        </div>
+                        <div style={{"display":"flex","flexDirection":"column","margin":"1rem 0rem 1rem 0rem"}}>
+                        <p>Why do you think you are fit for the job?</p>
+                        <TextField id="standard-basic" label="answer" name="ques2"  variant="standard" type="string" onChange={applyDataHandle}/>
+                        </div>
+                        <div style={{"display":"flex","flexDirection":"column","margin":"1rem 0rem 1rem 0rem"}}>
+                        <p>Describe about yourself in one sentence.</p>
+                        <TextField id="standard-basic" label="answer" name="ques3"  variant="standard" type="string" onChange={applyDataHandle}/>
+                        </div>
+                        <Button variant="contained" onClick={handleApply}>Submit</Button>
+                      </Box>
+                </Modal>
                 </div>
               </div>
               <div className = {styles.rightInnerdiv}>

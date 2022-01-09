@@ -28,9 +28,6 @@ function Postid(){
     },[postid]);
     let order=1;
 
-    async function modifyhandle(){
-
-    }
     async function deletehandle(){
         await fetch(`http://localhost:8000/posts/${postid}`,{
             method:'DELETE',

@@ -38,6 +38,15 @@ function CreatePost(){
         }
         setNewpost({...newpost,[name]:value})
     }
+    function taghandle(e){
+        let name,value,sList;
+        name=e.target.name;
+        value=e.target.value;
+        sList=value.split(',');
+        for (let i=0;i<sList.length;i++)sList[i]=sList[i].toUpperCase();
+        setNewpost({...newpost,[name]:sList})
+    }
+
 
     const addedDoc = "";
     const handlesubmit = (e)=>{
@@ -119,6 +128,12 @@ function CreatePost(){
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
+                        <div className={styles.innerdiv}>
+                    <strong className={styles.bold}>Skills</strong>
+    
+                    <input className={styles.input} type="text" name="skills" onChange={taghandle} required/>
+                 
+                </div>
                         <div className={styles.innerdiv}>
                             <button className={styles.btn}>Post</button>
                         </div>
