@@ -7,7 +7,7 @@ import {useCollection} from "react-firebase-hooks/firestore";
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc, updateDoc} from "firebase/firestore";
 import styles from  "../createpost.module.css";
 import Restricted from '../../../components/Restricted';
-
+import Alert from '@mui/material/Alert';
 
 function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}){
 
@@ -15,6 +15,8 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
     const sameUser = user?.email == userid;
     const router = useRouter();
     const postid = router.query.pid;
+    const [success,setSuccess] = useState(0);
+    const [failure,setFailure] = useState(0);
     const [newpost,setNewpost] = useState({
         title:"",
         goal:"",
@@ -52,10 +54,16 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
 
     async function handlesubmit(e){
         e.preventDefault();
-        await updateDoc(docRef,{
-            ...newpost
-        })
-        router.push(`/newPost/${postid}`)
+        try{
+            await updateDoc(docRef,{
+                ...newpost
+            })
+            setSuccess(1);
+            router.push(`/newPost/${postid}`);
+        }
+        catch(err){
+            setFailure(1);
+        }
     }
 
 
@@ -105,6 +113,11 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                         <button className={styles.btn}>Modify</button>
                     </div>
                 </form>
+                {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully updated</Alert>
+                     ):(<div></div>)}
+
+                {failure?(<Alert severity="error" onClose={() => {setFailure(0)}}>There was an Error while updating your Post</Alert>
+                     ):(<div></div>)}
                 </div>
             ):(
                 <Restricted/>
