@@ -15,16 +15,39 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 
-
 function Posts() {
   const [user] = useAuthState(auth);
-  const postRef = collection(db, "posts");
-  const [posts, loadingPosts] = useCollection(postRef);
+  const [option,setOption] = useState(0);
+  
+  const postRef = ()=>{
+    if(option === 0){
+      return collection(db, "posts");
+    }
+    else if(option === 1){
+      return query(collection(db, "posts"), orderBy("timestamp", "desc"));
+    }
+    else if(option === 2){
+      return query(collection(db, "posts"), orderBy("membercount", "asc"));
+    }
+    else if(option === 3){
+      return query(collection(db, "posts"), orderBy("membercount", "desc"));
+    }
+    else if(option === 4){
+      return query(collection(db, "posts"), orderBy("duration", "asc"));
+    }
+    else if(option === 5){
+      return query(collection(db, "posts"), orderBy("duration", "desc"));
+    }
+  }
+  const [posts, loadingPosts] = useCollection(postRef());
+  posts?.docs?.map(post => console.log(post.data()));
   const [clas, setClas] = useState("0px");
+  
   const toggleClass = () => {
     setClas(clas === "0px" ? "250px" : "0px");
-    console.log("Hi mowa");
   };
+
+
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
       <Head>
@@ -150,7 +173,7 @@ function Posts() {
                     transition: "all 0.3s",
                   }}
                 >
-                  <Link href="/post/Projectpost">
+                  <Link href="/newPost/createPost">
                     <a className="nav-link">newpost</a>
                   </Link>
                 </li>
@@ -216,13 +239,13 @@ function Posts() {
                       marginTop: "40px",
                       textAlign: "center",
                     }}
-                  >
+                  > 
                     <nav className={styles.nav_new}>
-                      {/* <label htmlFor="touch" style={{ display: "block" }}> */}
+                    
                       <span className={styles.span_new} onClick={toggleClass}>
                         sort by
                       </span>
-                      {/* </label> */}
+                    
                       <div id="touch" onClick={toggleClass} />
 
                       <ul
@@ -234,6 +257,7 @@ function Posts() {
                         <li className={styles.li_new}>
                           <a
                             href="#"
+                            onClick={()=>{setOption(1)}}
                             style={{
                               textDecoration: "none",
                               color: "black",
@@ -245,6 +269,7 @@ function Posts() {
                         <li className={styles.li_new}>
                           <a
                             href="#"
+                            onClick={()=>{setOption(2)}}
                             style={{
                               textDecoration: "none",
                               color: "black",
@@ -256,6 +281,7 @@ function Posts() {
                         <li className={styles.li_new}>
                           <a
                             href="#"
+                            onClick={()=>{setOption(3)}}
                             style={{
                               textDecoration: "none",
                               color: "black",
@@ -267,6 +293,7 @@ function Posts() {
                         <li className={styles.li_new}>
                           <a
                             href="#"
+                            onClick={()=>{setOption(4)}}
                             style={{
                               textDecoration: "none",
                               color: "black",
@@ -278,6 +305,7 @@ function Posts() {
                         <li className={styles.li_new}>
                           <a
                             href="#"
+                            onClick={()=>{setOption(5)}}
                             style={{
                               textDecoration: "none",
                               color: "black",
@@ -292,7 +320,7 @@ function Posts() {
                 </div>
               </div>
             </div>
-            <div className={user ? "col-lg-8 mt-5" : "col-lg-10 mt-5"} style={{ marginTop: "0px", paddingTop: "50px", background: "linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5)" }}>
+            <div className={user ? "col-lg-8 mt-5" : "col-lg-10 mt-5"} style={{ marginTop: "0px", paddingTop: "50px", background: "linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5)", minHeight:"50rem"}}>
               <div
                 className={styles.container_new}
                 style={{ marginTop: "0px", paddingTop: "100px" }}
