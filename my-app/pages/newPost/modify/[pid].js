@@ -55,6 +55,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         name=e.target.name;
         value=e.target.value;
         sList=value.split(',');
+        for (let i=0;i<sList.length;i++)sList[i]=sList[i].toUpperCase();
         setNewpost({...newpost,[name]:sList})
     }
 

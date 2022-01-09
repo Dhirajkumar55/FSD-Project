@@ -18,6 +18,14 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 function Posts() {
   const [user] = useAuthState(auth);
   const [option,setOption] = useState(0);
+  const [search,setSearch]=useState("")
+  const [appliedFlag,setAppliedFlag]=useState({"display":"none"});
+
+  useEffect(()=>{
+    if (user?.email){
+      setAppliedFlag({});
+    }
+  },[user])
   
   const postRef = ()=>{
     if(option === 0){
@@ -40,13 +48,16 @@ function Posts() {
     }
   }
   const [posts, loadingPosts] = useCollection(postRef());
-  posts?.docs?.map(post => console.log(post.data()));
+
   const [clas, setClas] = useState("0px");
   
   const toggleClass = () => {
     setClas(clas === "0px" ? "250px" : "0px");
   };
 
+  const handleSearch=(e)=>{
+    setSearch(e.target.value)
+  }
 
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
@@ -74,6 +85,7 @@ function Posts() {
         charset="UTF-8"
       />
       <Script
+       strategy="beforeInteractive"
         src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"
@@ -206,6 +218,7 @@ function Posts() {
                             fontFamily:
                               "'Lucida Console', Monaco, monospace, 'Font Awesome 5 Free'",
                           }}
+                          onChange={handleSearch}
                         />
                       </form>
                     </div>
@@ -217,7 +230,7 @@ function Posts() {
                       textAlign: "center",
                     }}
                   >
-                    <div className={styles.button_slide}>
+                    <div className={styles.button_slide} style={appliedFlag}>
                       APPLIED POSTS{" "}
                       <span>
                         {" "}
@@ -325,7 +338,17 @@ function Posts() {
                 className={styles.container_new}
                 style={{ marginTop: "0px", paddingTop: "100px" }}
               >
-                {posts?.docs?.map((post) => (
+                {posts?.docs?.filter((post)=>{
+                  console.log(post)
+                    if (search==""){
+                      return post;
+                    }
+                      for (const skill in post.data()?.skills){
+                        if (post.data()?.skills[skill].toLowerCase().includes(search.toLowerCase())){
+                          return post;
+                        }
+                      }
+                  })?.map((post) => (
                   <div className={styles.card_new} key={post.id}>
                     <div className={styles.card__body_new}>
                       {" "}
@@ -338,7 +361,6 @@ function Posts() {
                             alt="user__image"
                             className={styles.user__image_new}
                           />
-                          {console.log(post?.data()?.photoURL)}
                           <div className={styles.user__info_new}>
                             <h5> {post?.data()?.name}</h5>
                             <small>
