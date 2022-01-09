@@ -1,4 +1,3 @@
-
 import {useEffect} from 'react';
 import ChatPage from '../../components/chatpage/ChatPage'
 import Navbar from "../../components/navbar/Navbar";
@@ -11,12 +10,14 @@ import Sidebar from '../../components/chatpage/Sidebar';
 import ChatsScreen from  "../../components/chatpage/ChatsScreen"
 import styled from "styled-components";
 import {useRouter} from 'next/router'
+import Image from "next/image";
+import ReadytoChat from "../../public/readyToChat.svg"
 
 
 
 function Chat({chat, messages}){
     const router =  useRouter();
-    const ref =  doc(collection(db,'chats'),router.query.id);
+    // const ref =  doc(collection(db,'chats'),router.query.id);
 
     // console.log(id);
     const [user,loading] = useAuthState(auth)
@@ -42,7 +43,23 @@ function Chat({chat, messages}){
                 <Container>
                     <Sidebar/>
                     <ChatsContainer>
-                        <ChatsScreen chat={chat} messages={messages}/>
+                        {
+                            router.query.id === "1"?(
+                            <div style={{display:'grid', placeItems: 'center',height: '90vh',opacity:"0.8"}}>
+                                <Image 
+                                    src = {ReadytoChat} 
+                                    alt = "Ready to chat"
+                                    height = "600"
+                                    width = "600"
+                                >
+                                </Image>
+                            </div>
+                            ): (
+                            <ChatsScreen chat={chat} messages={messages}/>
+                            )
+
+                        }
+                       
                     </ChatsContainer>
                 </Container>
             </div>

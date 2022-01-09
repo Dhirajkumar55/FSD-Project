@@ -133,7 +133,7 @@ function CreatePost(){
     
                     <input className={styles.input} type="text" name="skills" onChange={taghandle} required/>
                  
-                </div>
+                    </div>
                         <div className={styles.innerdiv}>
                             <button className={styles.btn}>Post</button>
                         </div>

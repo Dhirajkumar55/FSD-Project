@@ -41,6 +41,7 @@ function SinglePost({
   const [user] = useAuthState(auth);
   const router = useRouter();
 
+
   const docRef = doc(collection(db, "posts"), router.query.id);
   const [mdl, setMdl] = useState(false);
   const [applyformdata, setApplyformdata] = useState({
@@ -94,6 +95,42 @@ function SinglePost({
     display: "flex",
     flexDirection: "column",
   };
+
+    const [user,laoding]= useAuthState(auth);
+    const router = useRouter();
+
+    const docRef = doc(collection(db, 'posts'),router.query.id);
+    const [mdl,setMdl]=useState(false);
+    const [applyformdata,setApplyformdata] = useState({
+        ques1:"",
+        ques2:"",
+        ques3:""
+    })
+    
+    const modifyFunctionality = ()=>{
+        if(user?.email === userid){
+            return  <button className = {styles.bluebtn} onClick={()=>router.push(`/newPost/modify/${router.query.id}`)}>Modify</button>
+        }
+    }
+    const applyDataHandle=(e)=>{
+        let name = e.target.name;
+        let value = e.target.value;
+        setApplyformdata({...applyformdata,[name]:value})
+        console.log(applyformdata)
+    }
+    function handleApply(e){
+        e.preventDefault();
+        const applyRef=collection(docRef,"AppliedBy");
+        addDoc(applyRef,{
+           ...applyformdata,
+           timestamp:serverTimestamp(),
+           name:user?.displayName,
+           photo:user?.photoURL,
+           userid:user?.email
+        })
+        setMdl(false)
+    }
+
 
   return (
     <div style={{ backgroundColor: "aliceblue" }}>
