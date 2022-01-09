@@ -18,7 +18,7 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 function Posts() {
   const [user] = useAuthState(auth);
   const [option,setOption] = useState(0);
-  
+
   const postRef = ()=>{
     if(option === 0){
       return collection(db, "posts");
@@ -40,12 +40,15 @@ function Posts() {
     }
   }
   const [posts, loadingPosts] = useCollection(postRef());
-  posts?.docs?.map(post => console.log(post.data()));
+  //posts?.docs?.map(post => console.log(post.data()));
   const [clas, setClas] = useState("0px");
   
   const toggleClass = () => {
     setClas(clas === "0px" ? "250px" : "0px");
   };
+
+
+
 
 
   return (
@@ -68,11 +71,6 @@ function Posts() {
           crossOrigin="anonymous"
         />
       </Head>{" "}
-      <Script
-        type="text/javascript"
-        src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=mc_7o8dQE-DdW4ZUaQTiasiJekYoD5FV3InHLGayTaFIlM47eIbqZdQS7mDVRZmW"
-        charset="UTF-8"
-      />
       <Script
         src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
