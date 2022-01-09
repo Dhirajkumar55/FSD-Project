@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 
 function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,name,photo,timestamp}){
 
-    const [user]= useAuthState(auth);
+    const [user,laoding]= useAuthState(auth);
     const router = useRouter();
 
     const docRef = doc(collection(db, 'posts'),router.query.id);
@@ -23,7 +23,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
         ques2:"",
         ques3:""
     })
-
+    
     const modifyFunctionality = ()=>{
         if(user?.email === userid){
             return  <button className = {styles.bluebtn} onClick={()=>router.push(`/newPost/modify/${router.query.id}`)}>Modify</button>

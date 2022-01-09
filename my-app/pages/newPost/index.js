@@ -14,10 +14,13 @@ import Tooltip from '@mui/material/Tooltip';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import {useRouter} from "next/router";
+
 
 function Posts() {
-  const [user] = useAuthState(auth);
+  const [user,loading] = useAuthState(auth);
   const [option,setOption] = useState(0);
+  const router = useRouter();
 
   const postRef = ()=>{
     if(option === 0){
@@ -38,6 +41,12 @@ function Posts() {
     else if(option === 5){
       return query(collection(db, "posts"), orderBy("duration", "desc"));
     }
+    else if(option === 6){
+      return query(collection(db, "posts"), where("userid","==", user?.email));
+    }
+    else if(option ===7){
+      
+    }
   }
   const [posts, loadingPosts] = useCollection(postRef());
   //posts?.docs?.map(post => console.log(post.data()));
@@ -46,9 +55,6 @@ function Posts() {
   const toggleClass = () => {
     setClas(clas === "0px" ? "250px" : "0px");
   };
-
-
-
 
 
   return (
@@ -75,6 +81,7 @@ function Posts() {
         src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"
+        strategy="beforeInteractive"
       />
       <Script
         src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
@@ -154,9 +161,11 @@ function Posts() {
                     color: "#1e1e1e",
                     transition: "all 0.3s",
                   }}
+
+                  onClick={()=>setOption(6)}
                 >
-                  <Link href="/signIn">
-                    <a className="nav-link">My projects</a>
+                  <Link href='#'>
+                    <a className="nav-link">My Posts</a>
                   </Link>
                 </li>
                 <li
@@ -458,7 +467,7 @@ function Posts() {
                           textAlign: "center",
                         }}
                       >
-                        <div className={styles.button_slide}>
+                        <div onClick={()=>{router.push('/chat/1')}} className={styles.button_slide}>
                           CHAT WITH OTHERS{" "}
                           <span>
                             {" "}
