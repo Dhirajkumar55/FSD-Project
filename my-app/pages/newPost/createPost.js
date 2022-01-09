@@ -5,11 +5,11 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from "react-firebase-hooks/firestore"
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc} from "firebase/firestore";
 import styles from  "./createpost.module.css"
-import { router } from 'json-server';
+import {useRouter} from "next/router"
 
 
 function CreatePost(){
-
+    const router=useRouter()
     const [user] = useAuthState(auth);
     console.log(user?.email);
     const [newpost,setNewpost] = useState({
@@ -28,7 +28,13 @@ function CreatePost(){
         value=e.target.value;
         setNewpost({...newpost,[name]:value})
     }
-
+    function taghandle(e){
+        let name,value,sList;
+        name=e.target.name;
+        value=e.target.value;
+        sList=value.split(',');
+        setNewpost({...newpost,[name]:sList})
+    }
 
     const handlesubmit = (e)=>{
         e.preventDefault();
@@ -61,7 +67,7 @@ function CreatePost(){
                 <div className={styles.innerdiv}>
                     <strong className={styles.bold}>Description</strong>
                 <label>
-                    <textArea className={styles.input} type="text" name="description" onChange={handleinput} required/>
+                    <textarea className={styles.input} type="text" name="description" onChange={handleinput} required/>
                 </label>
                 </div>
                 <div className={styles.innerdiv}>
@@ -81,6 +87,12 @@ function CreatePost(){
                 <label>
                     <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} required/>
                 </label> 
+                </div>
+                <div className={styles.innerdiv}>
+                    <strong className={styles.bold}>Skills</strong>
+    
+                    <input className={styles.input} type="text" name="skills" onChange={taghandle} required/>
+                 
                 </div>
                 <div className={styles.innerdiv}>
                     <button className={styles.btn}>Post</button>

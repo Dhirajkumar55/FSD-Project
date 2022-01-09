@@ -31,8 +31,9 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
                 
                
                 <h2>Skills</h2>
-                <div id={styles.skilldiv}>{
-                    // postdata.skills.map((skill)=><div id={styles.insideSkilldiv} key={order++}>{skill}</div>)
+                <div id={styles.skilldiv}>
+                    {
+                    skills.map((skill)=><div id={styles.insideSkilldiv} key={router.query.id}>{skill}</div>)
                 }</div>
                 <div id={styles.btndiv}>
                     {modifyFunctionality()}

@@ -48,7 +48,13 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         value=e.target.value;
         setNewpost({...newpost,[name]:value})
     }
-
+    function taghandle(e){
+        let name,value,sList;
+        name=e.target.name;
+        value=e.target.value;
+        sList=value.split(',');
+        setNewpost({...newpost,[name]:sList})
+    }
 
     async function handlesubmit(e){
         e.preventDefault();
@@ -101,6 +107,12 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                         <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} value={newpost.weeklyhrs} required/>
                     </label> 
                     </div>
+                    <div className={styles.innerdiv}>
+                    <strong className={styles.bold}>Skills</strong>
+    
+                    <input className={styles.input} type="text" name="skills" onChange={taghandle} value={newpost.skills}  required/>
+                 
+                </div>
                     <div className={styles.innerdiv}>
                         <button className={styles.btn}>Modify</button>
                     </div>
