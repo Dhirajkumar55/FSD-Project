@@ -9,18 +9,22 @@ import {useRouter} from 'next/router';
 import Restricted from '../../components/Restricted';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Alert from '@mui/material/Alert';
 
 function CreatePost(){
     const router = useRouter();
     const [user] = useAuthState(auth);
-    console.log(user?.email);
+
+    const [success,setSuccess] = useState(0);
+    const [failure,setFailure] = useState(0);
+
     const [newpost,setNewpost] = useState({
         title:"",
         goal:"",
         description:"",
-        membercount:"",
-        duration:"",
-        weeklyhrs:"",
+        membercount:0,
+        duration:0,
+        weeklyhrs:0,
         skills:[]
     })
 
@@ -28,21 +32,31 @@ function CreatePost(){
         let name,value;
         name=e.target.name;
         value=e.target.value;
+        if(name === "duration" || name === "weeklyhrs" || name == "membercount"){
+            value = parseInt(e.target.value);
+            console.log("name: ",name , typeof value);
+        }
         setNewpost({...newpost,[name]:value})
     }
 
-
+    const addedDoc = "";
     const handlesubmit = (e)=>{
         e.preventDefault();
         const newColRef = collection(db,'posts');
-        addDoc(newColRef,{
-            userid : user?.email,
-            name: user?.displayName,
-            ...newpost,
-            timestamp:serverTimestamp(),
-            photo:user.photoURL,
-        })
-        router.push('/newPost');
+        try{
+            addDoc(newColRef,{
+                userid : user?.email,
+                name: user?.displayName,
+                ...newpost,
+                timestamp:serverTimestamp(),
+                photo:user.photoURL,
+            }).then((snapshot)=>{addedDoc = snapshot._key.path.segments[1]})
+            setSuccess(1);
+            // router.push('/newPost');
+        }catch(err){
+            setFailure(1);
+        }
+        
     }
 
     return (
@@ -109,6 +123,14 @@ function CreatePost(){
                             <button className={styles.btn}>Post</button>
                         </div>
                     </form>
+                    <div className={styles.innerdiv}>
+                            <button className={styles.btn}>Click to view Post</button>
+                        </div>
+                    {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully posted</Alert>
+                     ):(<div></div>)}
+
+                    {failure?(<Alert severity="error" onClose={() => {setFailure(0)}}>There was an Error while posting your Post</Alert>
+                     ):(<div></div>)}
                 </div>
                 ):(
                     <Restricted/>

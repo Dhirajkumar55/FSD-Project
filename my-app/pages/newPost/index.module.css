@@ -318,6 +318,7 @@ body {
     background: linear-gradient(to left, white, aliceblue);
     list-style-type: none;
     padding: 0;
+    border-radius: 1px;
 }
 
 .li_new {
