@@ -1,96 +1,77 @@
-.bodydiv {
-    display: flex;
+.bodydiv{
+    display :flex;
     flex-direction: row;
-    padding: 2rem;
-    padding-top: 0;
-    background-color: #f9fbff;
+    padding:2rem;
+    background-color: #f5f9fffa;
     border: none;
     border-radius: 0.5rem;
 }
 
-.innerdiv {
-    display: flex;
+.innerdiv{
+    display:flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 70%;
+    width: 90vh;
     align-items: left;
-    border-right: 0.05rem solid #0e9fff91;
+    border-right: 0.1rem solid #0e9fff91;
 }
 
-.rightInnerdiv {
-    display: flex;
+.rightInnerdiv{
+    display:flex;
     flex-direction: column;
-    width: 30%;
+    width: 90vh;
     align-items: left;
     padding-left: 2rem;
-    padding-top: 1rem;
-    text-align: center;
+    padding-top:1rem;
 }
 
-.hr {
-    margin-top: 0rem;
-    margin-bottom: 0rem;
-    border-top: 0.05rem solid #0e9fff;
+.hr{
+    margin-top:0rem;
+    margin-bottom:0rem;
+    border-top: 0.2rem solid #0e9fff;
     border-bottom: none;
 }
-
-#title {
-    text-align: center;
+#title{
+    text-align:center;
+}
+.smallestdiv{
+    padding-left:3rem;
+    padding-right:2rem;
+    font-weight:400;
+    word-spacing:0.5rem;
+    line-height:2rem;
+    font-size:1.2rem;
+}
+.time{
+    font-size:1.2rem;
+    font-weight:400;
+}
+#skilldiv{
+    display:flex;
+    flex-direction:row;
+    margin-left:2rem;
+}
+#insideSkilldiv{
+    font-weight:500;
+    margin-left:1.5rem;
+    font-size:1.2rem;
+}
+#btndiv{
+    align-items:center;
+    padding:2rem 18rem;
 }
 
-.smallestdiv {
-    padding-left: 3rem;
-    padding-right: 2rem;
-    font-weight: 400;
-    word-spacing: 0.5rem;
-    line-height: 2rem;
-    font-size: 1.2rem;
-}
-
-.time {
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-#skilldiv {
-    display: flex;
-    flex-direction: row;
-    margin-left: 2rem;
-}
-
-#insideSkilldiv {
-    font-weight: 500;
-    margin-left: 1.5rem;
-    font-size: 1.2rem;
-}
-
-#btndiv {
-    align-items: center;
-    /* padding: 2rem 18rem; */
-}
-
-.bluebtn {
-    padding: 0.75rem 2rem;
-    text-align: center;
+.bluebtn{
+    padding:0.75rem 2rem;
+    text-align:center;
     font-size: 1.5rem;
     border: none;
     border-radius: 0.5rem;
-    background-color: #0e9fff;
-    color: #fff;
+    background-color:#0e9fff;
+    color:#fff;
     cursor: pointer;
 }
 
-.bluebtn:hover {
-    background-color: #0e9fffcb;
-}
-
-.new_button {
-    padding: 0.75rem 2rem;
-    text-align: center;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: #0e9fff;
-    color: #fff;
-    cursor: pointer;
+.bluebtn:hover{
+    background-color:#0e9fffcb;
 }
