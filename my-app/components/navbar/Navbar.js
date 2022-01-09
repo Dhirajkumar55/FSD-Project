@@ -12,8 +12,12 @@ function Navbar(props){
     function LoggedInUser(){
         return (
             <div className = "navbar-container">
-                <a href ="/" className = "logo">proSpaces</a>
-                <a href ="#" onClick={()=>signOut(auth)} className = "blue-button">Sign Out</a>
+                <Link href ="/">
+                    <a className = "logo">proSpaces</a>
+                </Link>
+                <Link href ="/">
+                    <a  onClick={()=>signOut(auth)} className = "blue-button">Sign Out</a>
+                </Link>
             </div>
         )
     }
@@ -21,15 +25,20 @@ function Navbar(props){
     function Stanger(){
         return (
             <div className = "navbar-container">
-                <a href ="/" className = "logo">proSpaces</a>
-                <a href ="/signUp" className = "blue-button">Get Started</a>
-                <a href = "/signIn" className = "white-button"> Sign In </a>
-                
+                <Link href = "/">
+                    <a className = "logo">proSpaces</a>  
+                </Link>
+                <Link href = "/signUp">
+                    <a className = "blue-button">Get Started</a>
+                </Link>
+                <Link href = "/signIn">
+                    <a className = "white-button"> Sign In </a>
+                </Link>
             </div>
         )
     }
 
-    
+
     console.log(user);
     
 

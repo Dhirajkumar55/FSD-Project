@@ -5,11 +5,13 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollection} from "react-firebase-hooks/firestore"
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc} from "firebase/firestore";
 import styles from  "./createpost.module.css"
-import {useRouter} from "next/router"
-
+import {useRouter} from 'next/router';
+import Restricted from '../../components/Restricted';
+import Tooltip from '@mui/material/Tooltip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 function CreatePost(){
-    const router=useRouter()
+    const router = useRouter();
     const [user] = useAuthState(auth);
     console.log(user?.email);
     const [newpost,setNewpost] = useState({
@@ -40,7 +42,8 @@ function CreatePost(){
         e.preventDefault();
         const newColRef = collection(db,'posts');
         addDoc(newColRef,{
-            userid :  user?.email,
+            userid : user?.email,
+            name: user?.displayName,
             ...newpost,
             timestamp:serverTimestamp(),
             photo:user.photoURL,
@@ -49,63 +52,79 @@ function CreatePost(){
     }
 
     return (
-        <PostContainer>
-            <div className={styles.div}>
-            <form onSubmit={handlesubmit}>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Title</strong>
-                <label>
-                    <input className={styles.input} type="text" name="title" onChange={handleinput} required/>
-                </label>
+        <div>
+            {
+                user?
+                (<div className={styles.div}>
+                    <form onSubmit={handlesubmit}>
+                        <div className={styles.innerdiv}>
+                            <strong className={styles.bold}>Title</strong>
+                            <label>
+                                <input className={styles.input} type="text" name="title" onChange={handleinput} required/>
+                            </label>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                                <InfoOutlinedIcon/>
+                            </Tooltip>
+                        </div>
+                        <div className={styles.innerdiv}>
+                            <strong className={styles.bold}>Goal</strong>
+                            <label>
+                                <input className={styles.input} type="text" name="goal" onChange={handleinput} required/>
+                            </label>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                                <InfoOutlinedIcon/>
+                            </Tooltip>
+                        </div>
+                        <div className={styles.innerdiv}>
+                            <strong className={styles.bold}>Description</strong>
+                            <label>
+                                <textArea className={styles.input} type="text" name="description" onChange={handleinput} required/>
+                            </label>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                                <InfoOutlinedIcon/>
+                            </Tooltip>
+                        </div>
+                        <div className={styles.innerdiv}>
+                            <strong className={styles.bold}>Total Members</strong>
+                            <label>
+                                <input className={styles.input} type="number" name="membercount" onChange={handleinput} required/>
+                            </label>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                                <InfoOutlinedIcon/>
+                            </Tooltip>
+                        </div>
+                        <div className={styles.innerdiv}>
+                            <strong className={styles.bold}>Duration</strong>
+                            <label>
+                                <input className={styles.input} type="number" name="duration" onChange={handleinput} required/>
+                            </label>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                                <InfoOutlinedIcon/>
+                            </Tooltip>
+                        </div>
+                        <div className={styles.innerdiv}>
+                            <strong className={styles.bold}>Weekly Hours</strong>
+                            <label>
+                                <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} required/>
+                            </label> 
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                                <InfoOutlinedIcon/>
+                            </Tooltip>
+                        </div>
+                        <div className={styles.innerdiv}>
+                            <button className={styles.btn}>Post</button>
+                        </div>
+                    </form>
                 </div>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Goal</strong>
-                <label>
-                    <input className={styles.input} type="text" name="goal" onChange={handleinput} required/>
-                </label>
-                </div>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Description</strong>
-                <label>
-                    <textarea className={styles.input} type="text" name="description" onChange={handleinput} required/>
-                </label>
-                </div>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Total Members</strong>
-                <label>
-                    <input className={styles.input} type="number" name="membercount" onChange={handleinput} required/>
-                </label>
-                </div>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Duration</strong>
-                <label>
-                    <input className={styles.input} type="number" name="duration" onChange={handleinput} required/>
-                </label>
-                </div>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Weekly Hours</strong>
-                <label>
-                    <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} required/>
-                </label> 
-                </div>
-                <div className={styles.innerdiv}>
-                    <strong className={styles.bold}>Skills</strong>
-    
-                    <input className={styles.input} type="text" name="skills" onChange={taghandle} required/>
-                 
-                </div>
-                <div className={styles.innerdiv}>
-                    <button className={styles.btn}>Post</button>
-                </div>
-            </form>
+                ):(
+                    <Restricted/>
+                )
+            }
+            
         </div>
-        </PostContainer>
     )
 
 }
 
 export default CreatePost;
 
-const PostContainer = styled.div`
-
-`;

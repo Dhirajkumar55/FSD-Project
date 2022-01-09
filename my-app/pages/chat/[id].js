@@ -28,6 +28,7 @@ function Chat({chat, messages}){
                 email: user.email,
                 lastSeen : serverTimestamp(),
                 photo:user.photoURL,
+                name:user.displayName,
             },{merge:true})
         }
     },[user])
