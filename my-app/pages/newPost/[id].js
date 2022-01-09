@@ -6,17 +6,19 @@ import styles from  "./singlepost.module.css";
 import {useRouter} from 'next/router';
 import Navbar from "../../components/navbar/Navbar"
 
-function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,photo,timestamp}){
+function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,name,photo,timestamp}){
+
     const [user]= useAuthState(auth);
     const router = useRouter();
 
-
     const docRef = doc(collection(db, 'posts'),router.query.id);
+
     const modifyFunctionality = ()=>{
         if(user?.email === userid){
             return  <button className = {styles.bluebtn} onClick={()=>router.push(`/newPost/modify/${router.query.id}`)}>Modify</button>
         }
     }
+
     return <div>
         <div >
             <Navbar/>
@@ -54,12 +56,12 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
 export default SinglePost;
 
 export async function getServerSideProps(context){
-    const docRef = doc(collection(db, 'posts'),context.query.id);
 
+    const docRef = doc(collection(db, 'posts'),context.query.id);
+    
     const postRef = await getDoc(docRef);
     
-    
-    console.log("typeof: ",typeof postRef.data());
+    console.log("typeof: ",postRef.data());
     
     return {
         props : { 
@@ -72,7 +74,8 @@ export async function getServerSideProps(context){
             skills : postRef.data().skills,
             userid : postRef.data().userid,
             photo : postRef.data().photo,
-            timestamp : postRef.data().timestamp?.toDate().getTime()
+            timestamp : postRef.data().timestamp?.toDate().getTime(),
+            name: postRef.data()?.name,
         }
     }
 
