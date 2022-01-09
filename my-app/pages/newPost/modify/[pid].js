@@ -21,9 +21,9 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         title:"",
         goal:"",
         description:"",
-        membercount:"",
-        duration:"",
-        weeklyhrs:"",
+        membercount:0,
+        duration:0,
+        weeklyhrs:0,
         skills:[]
     })
 
@@ -48,6 +48,9 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         let name,value;
         name=e.target.name;
         value=e.target.value;
+        if(name === "duration" || name === "weeklyhrs" || name == "membercount"){
+            value = parseInt(e.target.value);
+        }
         setNewpost({...newpost,[name]:value})
     }
     function taghandle(e){

@@ -16,7 +16,6 @@ import {useRouter} from 'next/router'
 
 function Chat({chat, messages}){
     const router =  useRouter();
-    const id=router.query.id;
     const ref =  doc(collection(db,'chats'),router.query.id);
 
     // console.log(id);
