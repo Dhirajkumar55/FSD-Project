@@ -33,15 +33,15 @@ return(
 
                     <ul className={styles.footer__nav}>
                         <li className="nav__item"  style={{lineHeight: "2em"}}>
-                            <h2 className={styles.nav__title}>Media</h2>
+                            <h2 className={styles.nav__title}>Useful links</h2>
 
                             <ul className="nav__ul">
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Posts</a>
+                                    <a href="/newPost" style={{color: "#999"}}>Posts</a>
                                 </li>
 
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Ads</a>
+                                    <a href="/Aboutus" style={{color: "#999"}}>About Us</a>
                                 </li>
 
                                 <li>

@@ -1,5 +1,6 @@
 
 // const Post = styled.div``;
+
 import { auth, db } from "../../firebase";
 import chat from '../../public/chat.svg';
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -107,7 +108,7 @@ function Posts() {
     }
   },[user])
 
-
+  
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
       <Head>
@@ -289,7 +290,7 @@ function Posts() {
                       textAlign: "center",
                     }}
                   >
-                    <div 
+                    {/* <div 
                       style ={appliedFlag}
                     className={styles.button_slide}>
                       APPLIED POSTS{" "}
@@ -305,7 +306,7 @@ function Posts() {
                           }}
                         ></i>
                       </span>{" "}
-                    </div>
+                    </div> */}
                   </div>
                   <div
                     className="col-lg-12"

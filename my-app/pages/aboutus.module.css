@@ -5,6 +5,12 @@
     margin-right: auto;
     margin-left: auto;
 }
+.hr {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    border-top: 0.05rem solid #0e9fff;
+    border-bottom: none;
+}
 
 .bg_white {
     --bs-bg-opacity: 1;
