@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useAuthState} from 'react-firebase-hooks/auth'
 import {signInWithPopup} from 'firebase/auth'
 import {auth,db,provider} from '../firebase'
 import {useRouter} from 'next/router'
@@ -30,13 +29,10 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-
-
-
 //this is Sign Up function, which will be executed when the user clicks the signUp button
 // and the signup method is implemented using Google auth provider, which is taken from a hook - useAuthState()
 function SignUp() {
+  
   const router = useRouter();
   const handleSubmit = (event) => {
     event.preventDefault();

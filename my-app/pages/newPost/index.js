@@ -107,7 +107,7 @@ function Posts() {
     }
   },[user])
 
-  
+
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
       <Head>

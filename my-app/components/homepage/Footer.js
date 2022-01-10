@@ -3,7 +3,9 @@ import styles from "./footer.module.css";
 
 function Footer() {
 return(
-    <div styles={{position: "fixed", bottom: "0px"}}>         
+    <div>         
+        <main>
+
         <div className="row d-flex justify-content-center align-items-center rows">
             <div className="col-md-6" style={{flex: "0 0 auto",width: "100%"}}>
                 <div className={styles.card}>
@@ -24,9 +26,9 @@ return(
                         <h2 style={{marginTop: "1.3em",fontSize: "15px",fontWeight: "400",}}>Contact</h2>
 
                         <address style={{fontStyle: "normal",color: "#999",}}>
-                        5534 Somewhere In. The World 22193-10212
+                        IIIT Sri City
                         </address>
-                        <a className="footer__btn" href="mailto:example@gmail.com" style={{fontStyle: "normal",color: "#0ea0ff",}}>Email Us</a>
+                        <a className="footer__btn" href="#" style={{fontStyle: "normal",color: "#0ea0ff",}}>Email Us</a>
                     </div>
 
                     <ul className={styles.footer__nav}>
@@ -35,63 +37,53 @@ return(
 
                             <ul className="nav__ul">
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Online</a>
+                                    <a href="#" style={{color: "#999"}}>Posts</a>
                                 </li>
 
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Print</a>
+                                    <a href="#" style={{color: "#999"}}>Ads</a>
                                 </li>
 
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Alternative Ads</a>
+                                    <a href="#" style={{color: "#999"}}>Founders</a>
                                 </li>
                             </ul>
                         </li>
                         
                         <li className="nav__item"  style={{lineHeight: "2em"}}>
-                            <h2 className={styles.nav__title}>Media</h2>
+                            <h2 className={styles.nav__title}>Social</h2>
 
                             <ul className="nav__ul">
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Online</a>
+                                    <a href="#" style={{color: "#999"}}>Instagram</a>
                                 </li>
 
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Print</a>
+                                    <a href="#" style={{color: "#999"}}>Facebook</a>
                                 </li>
 
                                 <li>
-                                    <a href="#" style={{color: "#999"}}>Alternative Ads</a>
+                                    <a href="#" style={{color: "#999"}}>Twitter</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li className={styles.nav__item__extra} style={{lineHeight: "2em",flexGrow: "2",}}>
-                            <h2 className={styles.nav__title}>Technology</h2>
+                            <h2 className={styles.nav__title}>Stream</h2>
 
                             <ul className={styles.nav__ul__extra}>
-                                {/* <li>
-                                    <a href="#" style={{color: "#999"}}>Hardware Design</a>
+                                
+
+                                <li>
+                                    <a href="#"style={{color: "#999"}}>CSE</a>
                                 </li>
 
                                 <li>
-                                    <a href="#"style={{color: "#999"}}>Software Design</a>
+                                    <a href="#"style={{color: "#999"}}>ECE</a>
                                 </li>
 
                                 <li>
-                                    <a href="#"style={{color: "#999"}}>Digital Signage</a>
-                                </li> */}
-
-                                <li>
-                                    <a href="#"style={{color: "#999"}}>Automation</a>
-                                </li>
-
-                                <li>
-                                    <a href="#"style={{color: "#999"}}>Artificial Intelligence</a>
-                                </li>
-
-                                <li>
-                                    <a href="#"style={{color: "#999"}}>IoT</a>
+                                    <a href="#"style={{color: "#999"}}>EEE</a>
                                 </li>
                             </ul>
                         </li>
@@ -121,6 +113,7 @@ return(
                     </div>
                 </footer>
             </div>    
+        </main>
     </div>
     )
 }

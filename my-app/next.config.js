@@ -6,7 +6,8 @@ module.exports = {
             "image.pngaaa.com",
             "d2gg9evh47fn9z.cloudfront.net",
             "www.westdalecareers.com",
-            "lh3.googleusercontent.com"
+            "lh3.googleusercontent.com",
+            "bootstrapious.com",
         ],
     },
 };
