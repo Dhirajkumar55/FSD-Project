@@ -18,6 +18,7 @@ function Chat({id,users}){
 
     const recipientEmail = getRecipientEmail(users,user);
 
+    
     const enterChat = () =>{
         router.push(`/chat/${id}`)
     }

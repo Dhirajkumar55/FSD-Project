@@ -18,11 +18,18 @@ import TimeAgo from "timeago-react";
 function ChatsScreen({chat, messages}){
 
     const [user]= useAuthState(auth);
+    // we are going to set the input state initally as "" using the react's useState() hook.
+    // by this we can track the data.
     const [input, setInput] = useState("");
     const endOfMessageRef = useRef(null);
     const router = useRouter();
     const userRef = doc(collection(db,'chats'), router.query.id);
     const [messagesSnapshot] = useCollection(query(collection(userRef, 'messages'),orderBy('timestamp','asc')));
+
+    //this show Messages function is executed when the user clicks some button with user's email id
+    // in the SiderBar component.
+    //the data is transferred as a props data to the Message Component which in turn is used to 
+    // differentiate and display the messages to user based on whether they are sent or received.
     const showMessages = () => {
         if(messagesSnapshot){
             return messagesSnapshot.docs.map(message => {
@@ -42,11 +49,13 @@ function ChatsScreen({chat, messages}){
     }
 
     
-
+    // this is the function which is executed when the user clicks the enter button, 
+    // after entering the text in the input box
     const sendMessage = (e) => {
         e.preventDefault();
 
-        //update their last seen
+        //update their last seen - the logic behind this is to show that the user is active and he is
+        // chatting
         setDoc(doc(db,'users',user.uid),{
             lastSeen : serverTimestamp(),
         },{merge:true});
@@ -54,6 +63,7 @@ function ChatsScreen({chat, messages}){
         const docRef = collection(db,'chats');
         console.log(docRef);
 
+        // this is to add the messages in firebase using the addDoc and it's a promise based one.
         addDoc(collection(doc(collection(db,'chats'), router.query.id), 'messages'),{
             timestamp : serverTimestamp(),
             message: input,
@@ -61,7 +71,9 @@ function ChatsScreen({chat, messages}){
             photo: user.photoURL,
         })
 
+        //this is to set the input box back again to ""
         setInput("");
+        // this scrollToMessageEnd is a function which shows the latest message that is sent.
         scrollToMessageEnd();
     }
 
@@ -72,6 +84,9 @@ function ChatsScreen({chat, messages}){
 		});
 	};
 
+
+    // te getRecipientEmail function gets the email id of the person whom we are sending a message to...
+    // and this recipientSnapshot is to just show to the user that whom he is sending a message to
     const [recipientSnapshot]= useCollection(query(collection(db, "users"), where("email", "==", getRecipientEmail(chat.users, user))));
     const recipientEmail = getRecipientEmail(chat.users, user);
     const recipient = recipientSnapshot?.docs?.[0]?.data();

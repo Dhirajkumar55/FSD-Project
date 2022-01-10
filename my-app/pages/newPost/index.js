@@ -18,52 +18,88 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import {useRouter} from "next/router";
+import {signOut} from 'firebase/auth'
 
 
 function Posts() {
+
+
+    // the useAuthState hook is used for maintaining the user status, whether he is logged in or not.
+    // it also returns a loading state which tells us that whether the user is logged in or not
+    // (i.e) as this hook returns a promise, the loading is set to true if there is no user status,
+    // and false once we get the user is logged in
+    // Note: that this hook is also decalred and used in other files, 
+    //so the above expalnation holds true for those files too.
   const [user,loading] = useAuthState(auth);
+
+    // this hook is used to populate option based on the user selection in the filter section
   const [option,setOption] = useState(0);
+
+    //This [id].js is a dynamic page and the id gets populated when a id is passed as a
+    // prop to the page. We can get the id value from the useRouter hook defined in Nextjs docs.
+    // this is the useRouter hook 
   const router = useRouter();
 
+
+  // the postRef is a reference to the posts collection in the firebase
+  // the reference to the collection changes based on the filter selection.
   const postRef = ()=>{
     if(option === 0){
+      // this is when no filter is selected
       return collection(db, "posts");
     }
     else if(option === 1){
+      // this is when the latest filter is selected
       return query(collection(db, "posts"), orderBy("timestamp", "desc"));
     }
     else if(option === 2){
+       // this is when the teamsize(ascending) filter is selected
       return query(collection(db, "posts"), orderBy("membercount", "asc"));
     }
     else if(option === 3){
+      // this is when the teamsize(descending) filter is selected
       return query(collection(db, "posts"), orderBy("membercount", "desc"));
     }
     else if(option === 4){
+      // this is when the duration(ascending) filter is selected
       return query(collection(db, "posts"), orderBy("duration", "asc"));
     }
     else if(option === 5){
+      // this is when the duration(descending) filter is selected
       return query(collection(db, "posts"), orderBy("duration", "desc"));
     }
     else if(option === 6){
+       // this is when the my posts button is clicked
       return query(collection(db, "posts"), where("userid","==", user?.email));
     }
     else if(option ===7){
       
     }
   }
+
+  // once the postRef has been set based on the option value
+  // this useCollection hook is used to listn to the firebase databse for any new docs added
+  // and displays them in real time.
   const [posts, loadingPosts] = useCollection(postRef());
-  //posts?.docs?.map(post => console.log(post.data()));
+  
+  // this setClas, useState related hook is used to diplay the sortby dropdown
+  //when clas = "0px" is set the sortby drop down is not in action
+  // when clas ="250px" is set the sortby drop down is shown to the users
+  // to select the filters from
   const [clas, setClas] = useState("0px");
   
+  //and this is the function which is responsible for the dropdown effect to happen
   const toggleClass = () => {
     setClas(clas === "0px" ? "250px" : "0px");
   };
 
+  // this setSearch, useState hook is used for searching posts based on the skill tags.
   const [search,setSearch]=useState("")
   const handleSearch=(e)=>{
     setSearch(e.target.value)
   }
 
+  // this setAppliedFlag, a useState hook is used for changing the css styles
   const [appliedFlag,setAppliedFlag]=useState({"display":"none"});
 
   useEffect(()=>{
@@ -72,7 +108,7 @@ function Posts() {
     }
   },[user])
 
-
+  
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
       <Head>

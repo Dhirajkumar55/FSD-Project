@@ -108,7 +108,7 @@ function CreatePost(){
                         <div className={styles.innerdiv}>
                             <strong className={styles.bold}>Total Members</strong>
                             <label>
-                                <input className={styles.input} type="number" name="membercount" onChange={handleinput} required/>
+                                <input className={styles.input} type="number" min="2" max="100" name="membercount" onChange={handleinput} required/>
                             </label>
                             <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of people you want in your team" arrow>
                                 <InfoOutlinedIcon/>
@@ -117,7 +117,7 @@ function CreatePost(){
                         <div className={styles.innerdiv}>
                             <strong className={styles.bold}>Duration</strong>
                             <label>
-                                <input className={styles.input} type="number" name="duration" onChange={handleinput} required/>
+                                <input className={styles.input} type="number" min="1" max="55" name="duration" onChange={handleinput} required/>
                             </label>
                             <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of weeks it takes for your project to complete" arrow>
                                 <InfoOutlinedIcon/>
@@ -126,7 +126,7 @@ function CreatePost(){
                         <div className={styles.innerdiv}>
                             <strong className={styles.bold}>Weekly Hours</strong>
                             <label>
-                                <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} required/>
+                                <input className={styles.input}type="number" min="1" max="12" name="weeklyhrs" onChange={handleinput} required/>
                             </label> 
                             <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the how much hours per week it takes for your project to complete" arrow>
                                 <InfoOutlinedIcon/>
@@ -144,9 +144,6 @@ function CreatePost(){
                             <button className={styles.btn}>Post</button>
                         </div>
                     </form>
-                    <div className={styles.innerdiv}>
-                            <button className={styles.btn}>Click to view Post</button>
-                        </div>
                     {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully posted, and you will be redirected to the post page in 2s</Alert>
                      ):(<div></div>)}
 

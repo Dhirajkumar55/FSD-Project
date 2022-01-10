@@ -32,20 +32,16 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-function SignUp() {
 
-  const [user] = useAuthState(auth);
+
+//this is Sign Up function, which will be executed when the user clicks the signUp button
+// and the signup method is implemented using Google auth provider, which is taken from a hook - useAuthState()
+function SignUp() {
   const router = useRouter();
   const handleSubmit = (event) => {
     event.preventDefault();
     signInWithPopup(auth, provider);
     router.push('/');
-    // const data = new FormData(event.currentTarget);
-    // // eslint-disable-next-line no-console
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
   };
 
   return (

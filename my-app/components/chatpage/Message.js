@@ -5,6 +5,8 @@ import moment from "moment";
 
 function Message({user, message}){
     const [userLoggedIn] = useAuthState(auth);
+	// this is to check whether the user who is sending the message is a sender or Receiver
+	// perform the necessary stylings.
     const TypeofMessage = user === userLoggedIn.email ? Sender:Receiver;
 	const Timestamp = user === userLoggedIn.email ? SenderTimestamp:ReceiverTimestamp;
 

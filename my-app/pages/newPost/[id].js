@@ -12,6 +12,7 @@ import {doc,serverTimestamp,setDoc,query,where,collection,getDocs,getDoc,orderBy
 import styles from "./singlepost.module.css";
 import { useRouter } from "next/router";
 import Navbar from "../../components/navbar/Navbar";
+import Alert from '@mui/material/Alert';
 
 function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,name,photo,timestamp}) {
   const [user,loading] = useAuthState(auth);
@@ -19,6 +20,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
 
   const docRef = doc(collection(db, "posts"), router.query.id);
   const [mdl, setMdl] = useState(false);
+  const [alert,setAlert] = useState(false);
   const [applyformdata, setApplyformdata] = useState({
     ques1: "",
     ques2: "",
@@ -117,12 +119,24 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
                 variant="contained"
                 className={styles.new_button}
                 size="medium"
-                onClick={() => {
-                  setMdl(true), console.log(mdl);
+                onClick={() => { 
+                  if(!user){
+                    setAlert(true);
+                    return;
+                  }
+                    setMdl(true)
+                    console.log(mdl);
                 }}
               >
                 Apply
               </Button>
+              {alert?(
+                <Alert severity = "error" onClose={() => {setAlert(false)}}>
+                  You have to SignUp/SignIn to apply...
+                </Alert>)
+              :(
+                <div></div>
+              )}
               <Modal
                 open={mdl}
                 onClose={() => {

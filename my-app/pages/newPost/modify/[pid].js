@@ -97,7 +97,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Goal</strong>
                     <label>
-                        <input className={styles.input} type="text" name="goal" onChange={handleinput} value={newpost.goal} required/>
+                        <input className={styles.input} type="text"  name="goal" onChange={handleinput} value={newpost.goal} required/>
                     </label>
                     <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a goal for your post" arrow>
                             <InfoOutlinedIcon/>
@@ -115,7 +115,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Total Members</strong>
                     <label>
-                        <input className={styles.input} type="number" name="membercount" onChange={handleinput} value={newpost.membercount} required/>
+                        <input className={styles.input} type="number" min="2" max="100" name="membercount" onChange={handleinput} value={newpost.membercount} required/>
                     </label>
                     <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of people you want in your team" arrow>
                             <InfoOutlinedIcon/>
@@ -124,7 +124,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Duration</strong>
                     <label>
-                        <input className={styles.input} type="number" name="duration" onChange={handleinput} value={newpost.duration} required/>
+                        <input className={styles.input} type="number" min="1" max="55" name="duration" onChange={handleinput} value={newpost.duration} required/>
                     </label>
                     <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of weeks it takes for your project to complete" arrow>
                             <InfoOutlinedIcon/>
@@ -133,7 +133,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Weekly Hours</strong>
                     <label>
-                        <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} value={newpost.weeklyhrs} required/>
+                        <input className={styles.input}type="number" min="1" max="12" name="weeklyhrs" onChange={handleinput} value={newpost.weeklyhrs} required/>
                     </label> 
                     <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the how much hours per week it takes for your project to complete" arrow>
                             <InfoOutlinedIcon/>

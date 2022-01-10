@@ -11,17 +11,31 @@ import ChatsScreen from  "../../components/chatpage/ChatsScreen"
 import styled from "styled-components";
 import {useRouter} from 'next/router'
 import Image from "next/image";
-import ReadytoChat from "../../public/readyToChat.svg"
+import ReadytoChat from "../../public/readyToChat.svg";
 
 
+
+
+// This [id].js is a dynamic page and the id gets populated when a id is passed as a
+// prop to the page. We can get the id value from the useRouter hook defined in Nextjs docs.
 
 function Chat({chat, messages}){
-    const router =  useRouter();
-    // const ref =  doc(collection(db,'chats'),router.query.id);
 
-    // console.log(id);
+    // this is the useRouter hook 
+    const router =  useRouter();
+
+    // the useAuthState hook is used for maintaining the user status, whether he is logged in or not.
+    // it also returns a loading state which tells us that whether the user is logged in or not
+    // (i.e) as this hook returns a promise, the loading is set to true if there is no user status,
+    // and false once we get the user is logged in
+    // Note: that this hook is also decalred and used in other files, 
+    //so the above expalnation holds true for those files too.
     const [user,loading] = useAuthState(auth)
 
+
+    // this useEffect hook takes a call back, it takes both the new users and the first time users
+    // and set their releavant fields as returned from the user state. and the {merge:true} is to just modify
+    // the user details if he has already logged in, and add a new refernce when a new user has signed up
     useEffect(()=>{
         if(user){
             setDoc(doc(db,'users',user.uid),{
@@ -70,15 +84,25 @@ function Chat({chat, messages}){
 
 export default Chat;
 
+
+// we are here taking advantage of nextjs's server side rendering capabilites
+// hence we use getServerSideProps function, which is run intially  (i.e.) before even rendering the
+// the ui to the user. This is most oftenly used to get the all the data before rendering it to the Users
+
 export async function getServerSideProps(context){
+
+    // this chatRef is a reference to the chats collection in the firebase based on the id which 
+    // is populated dynamically. hence it's used to get a particular chatref between two users
+    // which is previously stored in the chats collection
     const chatRef = doc(collection(db,'chats'),context.query.id);
 
+    // to getDocs is promise returning function and hence we used await,
+    // it's basic functionality is to get the docs from the messages collection ordered by time stamp.
     const messagesRes = await getDocs(query(collection(chatRef,'messages'),orderBy('timestamp','asc')));
 
-    // console.log("type: ",typeof messagesRes.docs);
-    // const messages = await onSnapshot(messagesRes, (doc)=>{
-    //     console.log("doc data: ",doc.data());
-    // })
+    //after we get the messageRes populated with the relevant data we should
+    // we want to get the meaningful data from the returned query object hence we need to use the .map(message => ({}))
+    // as it's an array object
     const messages = messagesRes.docs.map(message => ({
         id: message.id,
         ...message.data()
@@ -87,6 +111,7 @@ export async function getServerSideProps(context){
         timestamp: message.timestamp?.toDate().getTime()
     }));
 
+    // to get the chatSnapshot 
     const chatSnapShot = await getDoc(chatRef);
 
     const chat = {
@@ -94,6 +119,9 @@ export async function getServerSideProps(context){
         ...chatSnapShot.data()
     }
 
+    // and finally we are setting the inital props with the already populated data as above
+    // this data inside of the props can be used by the above Chat component to render the
+    // relevant content
     return {
         props:{ chat, messages: JSON.stringify(messages) },
     };

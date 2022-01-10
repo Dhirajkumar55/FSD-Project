@@ -12,16 +12,25 @@ import { signOut } from 'firebase/auth';
 import EmailValidator from 'email-validator';
 import {collection, query,where,addDoc} from 'firebase/firestore';
 import Chat from './Chat'
+import Button from '@mui/material/Button';
 
 function Sidebar(){
 
-    const [user] = useAuthState(auth);
-    const userChatRef = query(collection(db,'chats'), where('users', 'array-contains',user?.email));
-    //console.log("userChatRef: ", userChatRef);
+    const [user,loading] = useAuthState(auth);
+    let userChatRef = "";
+
+    // this loading status is taken from the useAuthState
+    if(!loading){
+        userChatRef = query(collection(db,'chats'), where('users', 'array-contains',user?.email));
+    }
+   
 
     const [chatsSnapshot] = useCollection(userChatRef);
-    //console.log("chatSnapShot: ", chatsSnapshot);
-
+   
+    // this function is run when the user tries to start a conversation with by typing in the email address
+    // on prompt. This function uses the email valiadation by a external module EmailValidatior from npm.
+    // This function only creates and instance if there is no exisiting instance betweeen the users in firebase.
+    // and also if the input is null it just returns by doing nothing
     const createChat = ()=>{
         const input = prompt("please enter a user's email");
 
@@ -36,6 +45,9 @@ function Sidebar(){
         }
     }
 
+
+    // the utility of this function is to check wheter there already exists a chat instance between
+    // the person who is logged in and the person whom he whishes to send a message to.
     const chatAlreadyExists =  (recipientEmail)=>{
         !!chatsSnapshot?.docs.find(chat => chat.data().users.find(user => user === recipientEmail)?.length > 0);
     }
@@ -44,7 +56,7 @@ function Sidebar(){
         <Container>
             <Header>
                 <TopContainer>
-                    <UserAvatar src = {user?.photoURL} onClick={() => createChat()}/>
+                    <UserAvatar src = {user?.photoURL}/>
                     <IconsContainer>
                         <IconButton color="primary">
                             <ChatIcon/>
@@ -58,20 +70,15 @@ function Sidebar(){
                     <SearchIcon/>
                     <SearchInput placeholder="Search in chats"/>
                 </Search>
-            </Header>
-           
+                <StartChat >
+                    <Button onClick={() => createChat()} size="large" variant="outlined">Start a new chat...</Button>
+                </StartChat>
                 
-            
-            
-
+            </Header>
             {/* list of chats */}
             {chatsSnapshot?.docs.map(chat=>(
                 <Chat key = {chat.id} id = {chat.id} users= {chat.data().users}/>
             ))}
-            {/* <PersonsContainer>
-
-            </PersonsContainer> */}
-
         </Container>
     )
 }
@@ -137,3 +144,8 @@ const SearchInput = styled.input`
     flex: 1; 
 `;
 
+const StartChat = styled.div`
+    margin-top:1rem;
+    padding: 0.5rem;
+    text-align: center;
+`;
