@@ -7,31 +7,33 @@ import {useCollection} from "react-firebase-hooks/firestore";
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc, updateDoc} from "firebase/firestore";
 import styles from  "../createpost.module.css";
 import Restricted from '../../../components/Restricted';
+import Tooltip from '@mui/material/Tooltip'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
 
 function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}){
 
-    const [user] = useAuthState(auth);
-    const sameUser = user?.email == userid;
-    const router = useRouter();
-    const postid = router.query.pid;
-    const [success,setSuccess] = useState(0);
-    const [failure,setFailure] = useState(0);
-    const [newpost,setNewpost] = useState({
+    const [user] = useAuthState(auth);   //return the data of the person who is logged in and is currently in this page 
+    const sameUser = user?.email == userid; //loggedin user validation with the person who created the post
+    const router = useRouter();    //hook used to get the query in the route of this page.
+    const postid = router.query.pid;    //query present in the route of this page
+    const [success,setSuccess] = useState(0);    //update success message
+    const [failure,setFailure] = useState(0);    //update failure message
+    const [newpost,setNewpost] = useState({      //hook to store post data and update
         title:"",
         goal:"",
         description:"",
-        membercount:0,
-        duration:0,
-        weeklyhrs:0,
+        membercount:1,
+        duration:1,
+        weeklyhrs:1,
         skills:[]
     })
 
-    const colRef = collection(db, 'posts');
-    const docRef = doc(colRef,postid);
+    const colRef = collection(db, 'posts');    //refence to the collection of all posts
+    const docRef = doc(colRef,postid);         //referece of the required document from the collection based on the postid
 
     useEffect(() => {
-        setNewpost({
+        setNewpost({                           //this hook is called  upon redering this page first time and the values are stored in the variable created above
             title: title,
             goal : goal,
             description: description,
@@ -44,7 +46,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         
 
 
-    const handleinput = (e)=>{
+    const handleinput = (e)=>{          //updates the values of the post
         let name,value;
         name=e.target.name;
         value=e.target.value;
@@ -53,7 +55,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         }
         setNewpost({...newpost,[name]:value})
     }
-    function taghandle(e){
+    function taghandle(e){            //updates the tags(skills required) of the post
         let name,value,sList;
         name=e.target.name;
         value=e.target.value;
@@ -62,7 +64,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         setNewpost({...newpost,[name]:sList})
     }
 
-    async function handlesubmit(e){
+    async function handlesubmit(e){         //function updates the data in firebase
         e.preventDefault();
         try{
             await updateDoc(docRef,{
@@ -88,42 +90,62 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                     <label>
                         <input className={styles.input} type="text" name="title" onChange={handleinput} value={newpost.title} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a title for your post" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Goal</strong>
                     <label>
                         <input className={styles.input} type="text" name="goal" onChange={handleinput} value={newpost.goal} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a goal for your post" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Description</strong>
                     <label>
                         <input className={styles.input} type="text" name="description" onChange={handleinput} value={newpost.description} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a description for your post" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Total Members</strong>
                     <label>
-                        <input className={styles.input} type="number" name="membercount" onChange={handleinput} value={newpost.membercount} required/>
+                        <input className={styles.input} type="number" name="membercount" onChange={handleinput} value={newpost.membercount} min="1" required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of people you want in your team" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Duration</strong>
                     <label>
-                        <input className={styles.input} type="number" name="duration" onChange={handleinput} value={newpost.duration} required/>
+                        <input className={styles.input} type="number" name="duration" onChange={handleinput} value={newpost.duration} min="1" required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of weeks it takes for your project to complete" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Weekly Hours</strong>
                     <label>
-                        <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} value={newpost.weeklyhrs} required/>
+                        <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} value={newpost.weeklyhrs} min="1" required/>
                     </label> 
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the how much hours per week it takes for your project to complete" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                     <strong className={styles.bold}>Skills</strong>
     
                     <input className={styles.input} type="text" name="skills" onChange={taghandle} value={newpost.skills}  required/>
-                 
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the skills as comma seperated values" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                 </div>
                     <div className={styles.innerdiv}>
                         <button className={styles.btn}>Modify</button>
@@ -147,8 +169,6 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
 export default ModifyPost;
 
 export async function getServerSideProps(context){
-
-    //console.log("id: ",context.query.pid);
 
     const docRef = doc(collection(db, 'posts'),context.query.pid);
 

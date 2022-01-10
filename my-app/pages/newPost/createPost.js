@@ -12,13 +12,13 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
 
 function CreatePost(){
-    const router = useRouter();
-    const [user] = useAuthState(auth);
+    const router = useRouter();                  //hook used to get the query in the route of this page.
+    const [user] = useAuthState(auth);           //return the data of the person who is logged in and is currently in this page 
 
-    const [success,setSuccess] = useState(0);
-    const [failure,setFailure] = useState(0);
+    const [success,setSuccess] = useState(0);   //hook to show success message when the post is created
+    const [failure,setFailure] = useState(0);   //hook to show failed message when the post is not created
 
-    const [newpost,setNewpost] = useState({
+    const [newpost,setNewpost] = useState({    //hook to store data of the post i.e. created
         title:"",
         goal:"",
         description:"",
@@ -28,7 +28,7 @@ function CreatePost(){
         skills:[]
     })
 
-    const handleinput = (e)=>{
+    const handleinput = (e)=>{           //function to collect data from form and store in hook.
         let name,value;
         name=e.target.name;
         value=e.target.value;
@@ -38,8 +38,8 @@ function CreatePost(){
         }
         setNewpost({...newpost,[name]:value})
     }
-    function taghandle(e){
-        let name,value,sList;
+    function taghandle(e){           //function to get the tag data(skills),convert it to an object and store in the hook 
+        let name,value,sList; 
         name=e.target.name;
         value=e.target.value;
         sList=value.split(',');
@@ -47,9 +47,7 @@ function CreatePost(){
         setNewpost({...newpost,[name]:sList})
     }
 
-
-    const addedDoc = "";
-    const handlesubmit = (e)=>{
+    const handlesubmit = (e)=>{              //function that sends data to the firebase after submission.
         e.preventDefault();
         const newColRef = collection(db,'posts');
         try{
@@ -59,14 +57,20 @@ function CreatePost(){
                 ...newpost,
                 timestamp:serverTimestamp(),
                 photo:user.photoURL,
-            }).then((snapshot)=>{addedDoc = snapshot._key.path.segments[1]})
+            }).then((snapshot)=>{
+                const postid = snapshot._key.path.segments[1];
+                setTimeout(()=>{
+                    router.push(`/newPost/${postid}`);
+                },2000)
+            })
             setSuccess(1);
-            // router.push('/newPost');
         }catch(err){
             setFailure(1);
         }
         
     }
+
+
 
     return (
         <div>
@@ -79,7 +83,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input} type="text" name="title" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a title for your post" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -88,7 +92,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input} type="text" name="goal" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a goal for your post" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -97,34 +101,34 @@ function CreatePost(){
                             <label>
                                 <textArea className={styles.input} type="text" name="description" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a description for your post" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
                         <div className={styles.innerdiv}>
                             <strong className={styles.bold}>Total Members</strong>
                             <label>
-                                <input className={styles.input} type="number" name="membercount" onChange={handleinput} required/>
+                                <input className={styles.input} type="number" name="membercount" onChange={handleinput} min="1" required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of people you want in your team" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
                         <div className={styles.innerdiv}>
                             <strong className={styles.bold}>Duration</strong>
                             <label>
-                                <input className={styles.input} type="number" name="duration" onChange={handleinput} required/>
+                                <input className={styles.input} type="number" name="duration" onChange={handleinput} min="1" required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of weeks it takes for your project to complete" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
                         <div className={styles.innerdiv}>
                             <strong className={styles.bold}>Weekly Hours</strong>
                             <label>
-                                <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} required/>
+                                <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} min="1" required/>
                             </label> 
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the how much hours per week it takes for your project to complete" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -132,16 +136,15 @@ function CreatePost(){
                     <strong className={styles.bold}>Skills</strong>
     
                     <input className={styles.input} type="text" name="skills" onChange={taghandle} required/>
-                 
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the skills as comma seperated values" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                         <div className={styles.innerdiv}>
                             <button className={styles.btn}>Post</button>
                         </div>
                     </form>
-                    <div className={styles.innerdiv}>
-                            <button className={styles.btn}>Click to view Post</button>
-                        </div>
-                    {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully posted</Alert>
+                    {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully posted, and you will be redirected to the post page in 2s</Alert>
                      ):(<div></div>)}
 
                     {failure?(<Alert severity="error" onClose={() => {setFailure(0)}}>There was an Error while posting your Post</Alert>
