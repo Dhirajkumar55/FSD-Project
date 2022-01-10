@@ -7,6 +7,8 @@ import {useCollection} from "react-firebase-hooks/firestore";
 import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc, updateDoc} from "firebase/firestore";
 import styles from  "../createpost.module.css";
 import Restricted from '../../../components/Restricted';
+import Tooltip from '@mui/material/Tooltip'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
 
 function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}){
@@ -88,42 +90,62 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
                     <label>
                         <input className={styles.input} type="text" name="title" onChange={handleinput} value={newpost.title} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a title for your post" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Goal</strong>
                     <label>
                         <input className={styles.input} type="text" name="goal" onChange={handleinput} value={newpost.goal} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a goal for your post" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Description</strong>
                     <label>
                         <input className={styles.input} type="text" name="description" onChange={handleinput} value={newpost.description} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a description for your post" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Total Members</strong>
                     <label>
                         <input className={styles.input} type="number" name="membercount" onChange={handleinput} value={newpost.membercount} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of people you want in your team" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Duration</strong>
                     <label>
                         <input className={styles.input} type="number" name="duration" onChange={handleinput} value={newpost.duration} required/>
                     </label>
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of weeks it takes for your project to complete" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                         <strong className={styles.bold}>Weekly Hours</strong>
                     <label>
                         <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} value={newpost.weeklyhrs} required/>
                     </label> 
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the how much hours per week it takes for your project to complete" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                     <div className={styles.innerdiv}>
                     <strong className={styles.bold}>Skills</strong>
     
                     <input className={styles.input} type="text" name="skills" onChange={taghandle} value={newpost.skills}  required/>
-                 
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the skills as comma seperated values" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                 </div>
                     <div className={styles.innerdiv}>
                         <button className={styles.btn}>Modify</button>

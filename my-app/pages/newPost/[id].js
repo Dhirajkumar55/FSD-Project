@@ -8,39 +8,14 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import {
-  doc,
-  serverTimestamp,
-  setDoc,
-  query,
-  where,
-  collection,
-  getDocs,
-  getDoc,
-  orderBy,
-  docs,
-  addDoc,
-} from "firebase/firestore";
+import {doc,serverTimestamp,setDoc,query,where,collection,getDocs,getDoc,orderBy,docs,addDoc} from "firebase/firestore";
 import styles from "./singlepost.module.css";
 import { useRouter } from "next/router";
 import Navbar from "../../components/navbar/Navbar";
 
-function SinglePost({
-  title,
-  goal,
-  description,
-  duration,
-  weeklyhrs,
-  membercount,
-  skills,
-  userid,
-  name,
-  photo,
-  timestamp,
-}) {
-  const [user] = useAuthState(auth);
+function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,name,photo,timestamp}) {
+  const [user,loading] = useAuthState(auth);
   const router = useRouter();
-
 
   const docRef = doc(collection(db, "posts"), router.query.id);
   const [mdl, setMdl] = useState(false);
@@ -96,42 +71,6 @@ function SinglePost({
     flexDirection: "column",
   };
 
-    const [user,laoding]= useAuthState(auth);
-    const router = useRouter();
-
-    const docRef = doc(collection(db, 'posts'),router.query.id);
-    const [mdl,setMdl]=useState(false);
-    const [applyformdata,setApplyformdata] = useState({
-        ques1:"",
-        ques2:"",
-        ques3:""
-    })
-    
-    const modifyFunctionality = ()=>{
-        if(user?.email === userid){
-            return  <button className = {styles.bluebtn} onClick={()=>router.push(`/newPost/modify/${router.query.id}`)}>Modify</button>
-        }
-    }
-    const applyDataHandle=(e)=>{
-        let name = e.target.name;
-        let value = e.target.value;
-        setApplyformdata({...applyformdata,[name]:value})
-        console.log(applyformdata)
-    }
-    function handleApply(e){
-        e.preventDefault();
-        const applyRef=collection(docRef,"AppliedBy");
-        addDoc(applyRef,{
-           ...applyformdata,
-           timestamp:serverTimestamp(),
-           name:user?.displayName,
-           photo:user?.photoURL,
-           userid:user?.email
-        })
-        setMdl(false)
-    }
-
-
   return (
     <div style={{ backgroundColor: "aliceblue" }}>
       <div>
@@ -170,7 +109,10 @@ function SinglePost({
               {modifyFunctionality()}
               {/* <button className = {styles.bluebtn}onClick={deletehandle}>Delete</button> */}
             </div>
-            <div>
+            {user?.email === userid?(
+              <div></div>
+            ):(
+              <div>
               <Button
                 variant="contained"
                 className={styles.new_button}
@@ -247,6 +189,7 @@ function SinglePost({
                 </Box>
               </Modal>
             </div>
+            )}
           </div>
         </div>
         <div className="sidebar-item comments">

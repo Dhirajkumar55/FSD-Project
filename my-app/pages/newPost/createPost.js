@@ -47,8 +47,6 @@ function CreatePost(){
         setNewpost({...newpost,[name]:sList})
     }
 
-
-    const addedDoc = "";
     const handlesubmit = (e)=>{
         e.preventDefault();
         const newColRef = collection(db,'posts');
@@ -59,14 +57,20 @@ function CreatePost(){
                 ...newpost,
                 timestamp:serverTimestamp(),
                 photo:user.photoURL,
-            }).then((snapshot)=>{addedDoc = snapshot._key.path.segments[1]})
+            }).then((snapshot)=>{
+                const postid = snapshot._key.path.segments[1];
+                setTimeout(()=>{
+                    router.push(`/newPost/${postid}`);
+                },2000)
+            })
             setSuccess(1);
-            // router.push('/newPost');
         }catch(err){
             setFailure(1);
         }
         
     }
+
+
 
     return (
         <div>
@@ -79,7 +83,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input} type="text" name="title" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a title for your post" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -88,7 +92,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input} type="text" name="goal" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a goal for your post" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -97,7 +101,7 @@ function CreatePost(){
                             <label>
                                 <textArea className={styles.input} type="text" name="description" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add a description for your post" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -106,7 +110,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input} type="number" name="membercount" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of people you want in your team" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -115,7 +119,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input} type="number" name="duration" onChange={handleinput} required/>
                             </label>
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the number of weeks it takes for your project to complete" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -124,7 +128,7 @@ function CreatePost(){
                             <label>
                                 <input className={styles.input}type="number" name="weeklyhrs" onChange={handleinput} required/>
                             </label> 
-                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="This is Dhiraj Kumar Chintada" arrow>
+                            <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the how much hours per week it takes for your project to complete" arrow>
                                 <InfoOutlinedIcon/>
                             </Tooltip>
                         </div>
@@ -132,7 +136,9 @@ function CreatePost(){
                     <strong className={styles.bold}>Skills</strong>
     
                     <input className={styles.input} type="text" name="skills" onChange={taghandle} required/>
-                 
+                    <Tooltip color="primary" sx={{width:"1.5rem", height:"1.5rem"}}title="Please add the skills as comma seperated values" arrow>
+                            <InfoOutlinedIcon/>
+                    </Tooltip>
                     </div>
                         <div className={styles.innerdiv}>
                             <button className={styles.btn}>Post</button>
@@ -141,7 +147,7 @@ function CreatePost(){
                     <div className={styles.innerdiv}>
                             <button className={styles.btn}>Click to view Post</button>
                         </div>
-                    {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully posted</Alert>
+                    {success?(<Alert onClose={() => {setSuccess(0)}}>Your Post has been successfully posted, and you will be redirected to the post page in 2s</Alert>
                      ):(<div></div>)}
 
                     {failure?(<Alert severity="error" onClose={() => {setFailure(0)}}>There was an Error while posting your Post</Alert>

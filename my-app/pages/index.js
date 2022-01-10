@@ -1,11 +1,9 @@
 import React, {useContext} from "react";
-
-import { useRouter} from "next/router"
-import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
 import Banner from "../components/homepage/Banner";
 import {auth,} from "../firebase"
 import {useAuthState} from "react-firebase-hooks/auth";
+import Footer from "../components/homepage/footer";
 function App(){
 
   const [user] = useAuthState(auth);
@@ -14,6 +12,7 @@ function App(){
     <div>
       <Navbar/>
       <Banner/>
+      <Footer/>
     </div>
   )
 }
