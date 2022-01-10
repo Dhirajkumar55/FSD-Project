@@ -1,6 +1,5 @@
 
 // const Post = styled.div``;
-
 import { auth, db } from "../../firebase";
 import chat from '../../public/chat.svg';
 import { useAuthState } from "react-firebase-hooks/auth";

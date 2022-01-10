@@ -12,13 +12,13 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
 
 function CreatePost(){
-    const router = useRouter();
-    const [user] = useAuthState(auth);
+    const router = useRouter();                  //hook used to get the query in the route of this page.
+    const [user] = useAuthState(auth);           //return the data of the person who is logged in and is currently in this page 
 
-    const [success,setSuccess] = useState(0);
-    const [failure,setFailure] = useState(0);
+    const [success,setSuccess] = useState(0);   //hook to show success message when the post is created
+    const [failure,setFailure] = useState(0);   //hook to show failed message when the post is not created
 
-    const [newpost,setNewpost] = useState({
+    const [newpost,setNewpost] = useState({    //hook to store data of the post i.e. created
         title:"",
         goal:"",
         description:"",
@@ -28,7 +28,7 @@ function CreatePost(){
         skills:[]
     })
 
-    const handleinput = (e)=>{
+    const handleinput = (e)=>{           //function to collect data from form and store in hook.
         let name,value;
         name=e.target.name;
         value=e.target.value;
@@ -38,8 +38,8 @@ function CreatePost(){
         }
         setNewpost({...newpost,[name]:value})
     }
-    function taghandle(e){
-        let name,value,sList;
+    function taghandle(e){           //function to get the tag data(skills),convert it to an object and store in the hook 
+        let name,value,sList; 
         name=e.target.name;
         value=e.target.value;
         sList=value.split(',');
@@ -47,7 +47,7 @@ function CreatePost(){
         setNewpost({...newpost,[name]:sList})
     }
 
-    const handlesubmit = (e)=>{
+    const handlesubmit = (e)=>{              //function that sends data to the firebase after submission.
         e.preventDefault();
         const newColRef = collection(db,'posts');
         try{

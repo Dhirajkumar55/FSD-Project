@@ -13,27 +13,27 @@ import Alert from '@mui/material/Alert';
 
 function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}){
 
-    const [user] = useAuthState(auth);
-    const sameUser = user?.email == userid;
-    const router = useRouter();
-    const postid = router.query.pid;
-    const [success,setSuccess] = useState(0);
-    const [failure,setFailure] = useState(0);
-    const [newpost,setNewpost] = useState({
+    const [user] = useAuthState(auth);   //return the data of the person who is logged in and is currently in this page 
+    const sameUser = user?.email == userid; //loggedin user validation with the person who created the post
+    const router = useRouter();    //hook used to get the query in the route of this page.
+    const postid = router.query.pid;    //query present in the route of this page
+    const [success,setSuccess] = useState(0);    //update success message
+    const [failure,setFailure] = useState(0);    //update failure message
+    const [newpost,setNewpost] = useState({      //hook to store post data and update
         title:"",
         goal:"",
         description:"",
-        membercount:0,
-        duration:0,
-        weeklyhrs:0,
+        membercount:1,
+        duration:1,
+        weeklyhrs:1,
         skills:[]
     })
 
-    const colRef = collection(db, 'posts');
-    const docRef = doc(colRef,postid);
+    const colRef = collection(db, 'posts');    //refence to the collection of all posts
+    const docRef = doc(colRef,postid);         //referece of the required document from the collection based on the postid
 
     useEffect(() => {
-        setNewpost({
+        setNewpost({                           //this hook is called  upon redering this page first time and the values are stored in the variable created above
             title: title,
             goal : goal,
             description: description,
@@ -46,7 +46,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         
 
 
-    const handleinput = (e)=>{
+    const handleinput = (e)=>{          //updates the values of the post
         let name,value;
         name=e.target.name;
         value=e.target.value;
@@ -55,7 +55,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         }
         setNewpost({...newpost,[name]:value})
     }
-    function taghandle(e){
+    function taghandle(e){            //updates the tags(skills required) of the post
         let name,value,sList;
         name=e.target.name;
         value=e.target.value;
@@ -64,7 +64,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         setNewpost({...newpost,[name]:sList})
     }
 
-    async function handlesubmit(e){
+    async function handlesubmit(e){         //function updates the data in firebase
         e.preventDefault();
         try{
             await updateDoc(docRef,{
@@ -169,8 +169,6 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
 export default ModifyPost;
 
 export async function getServerSideProps(context){
-
-    //console.log("id: ",context.query.pid);
 
     const docRef = doc(collection(db, 'posts'),context.query.pid);
 
