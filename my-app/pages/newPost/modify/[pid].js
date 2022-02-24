@@ -42,6 +42,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
             membercount : membercount,
             skills : skills,
         });
+        {/* eslint-disable-next-line*/}
     },[postid])
         
 

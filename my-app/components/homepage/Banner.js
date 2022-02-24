@@ -17,16 +17,17 @@ function Banner(){
                     <h2 style = {{"fontSize":"3rem","fontWeight":"normal"}}>Learn Together ...</h2>
                     <h1 style = {{"fontSize":"3.5rem","fontWeight":"normal"}}>Grow Together ....</h1>
                     <SameContainer>
-                        <h1 style = {{"fontSize":"2rem","fontWeight":"normal","paddingTop":"3.75rem"}}>So let's find you a team</h1>
+                        <h1 style = {{"fontSize":"2rem","fontWeight":"normal","paddingTop":"3.75rem"}}>So let&apos;s find you a team</h1>
                         <Link href = "/newPost">
                             <a>
-                                <WhiteButton>Let's Go</WhiteButton>
+                                <WhiteButton>Let&apos;s Go</WhiteButton>
                             </a>
                         </Link>
                     </SameContainer>
                     
                 </TextContainer>
                 <ImageContainer>
+                    {/* eslint-disable-next-line*/}
                     <img src="../team.png" alt="team" style = {style}/>
                 </ImageContainer>
                 

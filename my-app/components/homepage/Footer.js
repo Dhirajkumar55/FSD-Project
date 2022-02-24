@@ -9,7 +9,9 @@ return(
         <div className="row d-flex justify-content-center align-items-center rows">
             <div className="col-md-6" style={{flex: "0 0 auto",width: "100%"}}>
                 <div className={styles.card}>
-                    <div className="text-center" style={{textAlign: "center" }}> <img src="https://i.imgur.com/Dh7U4bp.png" width="200"></img> <span className="d-block mt-3" style={{display: "block",marginTop: "1rem"}}>Subscribe to our newsletter in order not to miss new arrivals <br/> promotions and discounts of our store</span>
+                    <div className="text-center" style={{textAlign: "center" }}> 
+                    {/* eslint-disable-next-line*/}
+                    <img src="https://i.imgur.com/Dh7U4bp.png" width="200"></img> <span className="d-block mt-3" style={{display: "block",marginTop: "1rem"}}>Subscribe to our newsletter in order not to miss new arrivals <br/> promotions and discounts of our store</span>
                         <div className={styles.mx_5}>
                             <div className={styles.input_group}>  <input type="text" className={styles.form_control} placeholder="Enter email" aria-label="Recipient's username" aria-describedby="button-addon2" style={{width: "20rem",}}/>  <button className={styles.btn} type="button" id="button-addon2" style={{color: "#fff",backgroundColor: "#0ea0ff",borderColor: "#0ea0ff",}}>Subscribe</button> 
                             </div>   
@@ -37,10 +39,12 @@ return(
 
                             <ul className="nav__ul">
                                 <li>
+                                    {/* eslint-disable-next-line*/}
                                     <a href="/newPost" style={{color: "#999"}}>Posts</a>
                                 </li>
 
                                 <li>
+                                    {/* eslint-disable-next-line*/}
                                     <a href="/Aboutus" style={{color: "#999"}}>About Us</a>
                                 </li>
 
