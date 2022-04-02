@@ -33,9 +33,9 @@ function Chat({chat, messages}){
     const [user,loading] = useAuthState(auth)
 
 
-    // this useEffect hook takes a call back, it takes both the new users and the first time users
+    // this useEffect hook takes a call back, it takes both the existing users and the first time users
     // and set their releavant fields as returned from the user state. and the {merge:true} is to just modify
-    // the user details if he has already logged in, and add a new refernce when a new user has signed up
+    // the user details if he has already logged in, and add a new reference when a new user has signed up
     useEffect(()=>{
         if(user){
             setDoc(doc(db,'users',user.uid),{

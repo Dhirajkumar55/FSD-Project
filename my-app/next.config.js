@@ -10,4 +10,7 @@ module.exports = {
             "bootstrapious.com",
         ],
     },
+    env:{
+        MONGODB_URI : "mongodb+srv://proSpaces:proSpaces@prosapces.g6usv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    },
 };

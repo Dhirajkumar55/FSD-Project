@@ -1,4 +1,3 @@
-
 import "../styles/header.css";
 
 function MyApp({ Component, pageProps }) {
