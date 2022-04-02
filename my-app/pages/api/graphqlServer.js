@@ -8,6 +8,7 @@ const cors = Cors();
 
 dbConnect();
 
+
 const apolloServer = new ApolloServer({typeDefs, resolvers});
 
 const server = apolloServer.start();

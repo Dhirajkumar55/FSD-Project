@@ -1,30 +1,30 @@
 import mongoose from 'mongoose';
-const {model,Schema} = mongoose;
+const {models,model,Schema} = mongoose;
 
 const userSchema = new Schema(
     {
         name: {
-            type: 'string',
+            type: String,
             required: true
         },
         username:{
-            type: 'string', 
+            type: String, 
             required:true,
         },
         password:{
-            type: 'string', 
+            type: String, 
             required:true
         },
         email: {
-            type: 'string', 
+            type: String, 
             required:true,
             unique: true
         },
         token: {
-            type: 'string',
+            type: String,
             required:true
         },
-        imageURL: 'string',
+        imageURL: String,
         posts:[{
             type: Schema.Types.ObjectId,
             ref: 'Post'
@@ -37,4 +37,4 @@ const userSchema = new Schema(
     {timeStamps:true}
 );
 
-module.exports = model('User', userSchema);
+module.exports = models.User || model('User', userSchema);

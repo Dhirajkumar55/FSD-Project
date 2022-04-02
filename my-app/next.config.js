@@ -11,6 +11,7 @@ module.exports = {
         ],
     },
     env:{
-        MONGODB_URI : "mongodb+srv://proSpaces:proSpaces@prosapces.g6usv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+        MONGODB_URI : "mongodb+srv://proSpaces:proSpaces@prosapces.g6usv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+        APP_SECRET_KEY : "IFYOUSEETHISYOUWILLGOTOHELL",
     },
 };

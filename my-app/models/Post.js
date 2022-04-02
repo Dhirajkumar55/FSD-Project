@@ -1,25 +1,25 @@
 import mongoose from 'mongoose';
-const {model,Schema} = mongoose;
+const {models,model,Schema} = mongoose;
 
 const postSchema = new Schema(
     {
         title:{
-            type: 'string',
+            type: String,
             required: true
         },
         description:{
-            type: 'string',
+            type: String,
             required: true
         },
         goal:{
-            type: 'string',
+            type: String,
             required: true
         },
         membercount: Number,
         duration: Number,
         Weeklyhrs: Number,
         skills:[{
-            type: 'string',
+            type: String,
         }],
         postedBy:{
             type: Schema.Types.ObjectId,
@@ -33,4 +33,4 @@ const postSchema = new Schema(
     {timeStamps:true}
 )
 
-module.exports = model('Post', postSchema);
+module.exports = models.Post || model('Post', postSchema);

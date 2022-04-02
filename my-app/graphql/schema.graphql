@@ -5,7 +5,7 @@ type Query{
 
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload
+  signup(email: String!,username: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   createPost(title: String!, description: String!,goal: String!, membercount:Int!, duration:Int!, weelkyhrs:Int!, skills:[String!]!): Post!
   updatePost(id: ID!, title: String, description: String, goal: String, membercount:Int, duration:Int, weelkyhrs:Int, skills:[String!] ): Post
@@ -36,6 +36,7 @@ type User {
   imageURL: String
   posts: [Post!]!
   appliedTo: [Post!]!
+  token:String!
 }
 
 type AuthPayload{
