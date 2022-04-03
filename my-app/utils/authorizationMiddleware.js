@@ -1,5 +1,3 @@
-import User from "../models/User";
-import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 
 const APP_SECRET = process.env.APP_SECRET_KEY;

@@ -5,4 +5,9 @@ async function postedBy(parent, args, context, info){
     return res.postedBy;
 };
 
-export {postedBy}
+async function appliedBy(parent, args, context, info){
+    const res = await Post.findOne({_id:parent.id}).populate('appliedBy').exec();
+    return res.appliedBy;
+};
+
+export {postedBy,appliedBy}

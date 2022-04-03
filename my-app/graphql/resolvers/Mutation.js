@@ -94,7 +94,7 @@ async function createPost(parent, args, context, info){
         throw new ApolloError("Invalid Authorization", "NOT_AUTHORIZED")
     }
 
-
+    // create a new post and save it in the database
     const newPost = new Post({
         title: args.title,
         description: args.description,
@@ -108,21 +108,43 @@ async function createPost(parent, args, context, info){
 
     const res = await newPost.save();
 
+    // save the postid in the User's appliedTo field
     const user = await User.findById(user_id);
     user.posts.push(newPost._id);
     await user.save();
 
-    return {
-        id: res._id,
-        title: res.title,
-        description: res.description,
-        goal: res.goal,
-        membercount: res.membercount,
-        duration: res.duration,
-        weeklyhrs: res.weeklyhrs,
-        createdAt:res.createdAt,
-        skills: res.skills
-    }
+    //return the post
+    return res;
 }
 
-export {signup,login,createPost};
+async function applyToPost(parent, args, context, info){
+    const user_id = context.user;
+    const postId = args.id;
+   
+    if(!user_id){
+        throw new ApolloError("Invalid Authorization", "NOT_AUTHORIZED")
+    }
+
+    // store the post id in the User's appliedTo field
+    const user = await User.findById(user_id);
+    // check if the user has already applied to the post
+    if(!user.appliedTo.includes(postId)){
+        user.appliedTo.push(postId);
+        await user.save();
+    }
+
+    // store the User id in the Post's appliedBy field
+    const post = await Post.findById(postId);
+    // check if the post has already been applied by the user
+    if(!post.appliedBy.includes(user_id)){
+        post.appliedBy.push(user_id);
+    }
+    
+    const res = await post.save();
+    
+    // return the post
+    return res;
+}
+
+
+export {signup,login,createPost,applyToPost};

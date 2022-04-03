@@ -9,6 +9,7 @@ type Mutation {
   signup(email: String!,username: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   createPost(title: String!, description: String!,goal: String!, membercount:Int!, duration:Int!, weeklyhrs:Int!, skills:[String!]!): Post!
+  applyToPost(id: ID!): Post
   updatePost(id: ID!, title: String, description: String, goal: String, membercount:Int, duration:Int, weeklyhrs:Int, skills:[String!] ): Post
   deletePost(id: ID!): Post
 } 
