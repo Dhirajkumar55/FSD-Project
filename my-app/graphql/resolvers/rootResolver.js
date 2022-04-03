@@ -1,14 +1,19 @@
 import {signup, login, createPost} from "./Mutation"
-import { posts } from "./Query";
+import { posts,user} from "./Query";
+import { postedBy } from "./Post";
 
 const resolvers = {
     Query:{
-        posts
+        posts,
+        user
     },
     Mutation:{
         signup,
         login,
         createPost
+    },
+    Post:{
+        postedBy
     }
 }
 

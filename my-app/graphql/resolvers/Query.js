@@ -6,4 +6,11 @@ async function posts(parent, args, context, info){
     return res;
 }
 
-export {posts};
+
+async function user(parent, args, context, info){
+    const email = args.email;
+    const res = await User.findOne({email}).populate('posts').exec();
+    return res;
+}
+
+export {posts,user};

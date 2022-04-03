@@ -87,6 +87,14 @@ async function login(parent, args, context, info){
 }
 
 async function createPost(parent, args, context, info){
+
+    const user_id = context.user;
+    
+    if(!user_id){
+        throw new ApolloError("Invalid Authorization", "NOT_AUTHORIZED")
+    }
+
+
     const newPost = new Post({
         title: args.title,
         description: args.description,
@@ -94,10 +102,15 @@ async function createPost(parent, args, context, info){
         membercount: args.membercount,
         duration: args.duration,
         weeklyhrs: args.weeklyhrs,
-        skills: args.skills
+        skills: args.skills,
+        postedBy: user_id
     });
 
     const res = await newPost.save();
+
+    const user = await User.findById(user_id);
+    user.posts.push(newPost._id);
+    await user.save();
 
     return {
         id: res._id,
