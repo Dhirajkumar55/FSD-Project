@@ -1,9 +1,14 @@
-import {signup, login} from "./Mutation"
+import {signup, login, createPost} from "./Mutation"
+import { posts } from "./Query";
 
 const resolvers = {
+    Query:{
+        posts
+    },
     Mutation:{
         signup,
-        login
+        login,
+        createPost
     }
 }
 

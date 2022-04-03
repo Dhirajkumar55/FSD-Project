@@ -17,7 +17,7 @@ const postSchema = new Schema(
         },
         membercount: Number,
         duration: Number,
-        Weeklyhrs: Number,
+        weeklyhrs: Number,
         skills:[{
             type: String,
         }],
@@ -30,7 +30,7 @@ const postSchema = new Schema(
             ref: 'User'
         }],
     },
-    {timeStamps:true}
+    {timestamps:true}
 )
 
 module.exports = models.Post || model('Post', postSchema);

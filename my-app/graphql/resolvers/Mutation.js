@@ -62,7 +62,7 @@ async function login(parent, args, context, info){
     // check if the entered password equals the encrypted password
     if(user && await bcrypt.compare(password, user.password)){
 
-        //create a new token
+        //create a new token and attach it to the user
         const token = jwt.sign(
             {
                 user_id: user._id,
@@ -81,9 +81,35 @@ async function login(parent, args, context, info){
         }
     }
     else{
+        // if the password doesn't match
         throw new ApolloError("Password doesn't match", "INVALID_PASSWORD");
     }
 }
 
+async function createPost(parent, args, context, info){
+    const newPost = new Post({
+        title: args.title,
+        description: args.description,
+        goal: args.goal,
+        membercount: args.membercount,
+        duration: args.duration,
+        weeklyhrs: args.weeklyhrs,
+        skills: args.skills
+    });
 
-export {signup,login};
+    const res = await newPost.save();
+
+    return {
+        id: res._id,
+        title: res.title,
+        description: res.description,
+        goal: res.goal,
+        membercount: res.membercount,
+        duration: res.duration,
+        weeklyhrs: res.weeklyhrs,
+        createdAt:res.createdAt,
+        skills: res.skills
+    }
+}
+
+export {signup,login,createPost};

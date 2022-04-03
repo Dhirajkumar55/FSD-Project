@@ -34,7 +34,7 @@ const userSchema = new Schema(
             ref: 'Post'
         }]
     },
-    {timeStamps:true}
+    {timestamps:true}
 );
 
 module.exports = models.User || model('User', userSchema);
