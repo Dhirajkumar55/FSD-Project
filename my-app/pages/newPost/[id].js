@@ -16,11 +16,12 @@ import Alert from '@mui/material/Alert';
 import {useCollection} from "react-firebase-hooks/firestore";
 import Tooltip from '@mui/material/Tooltip'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import {client} from "../../graphql/client/clientSetup"
+import {GET_POST} from "../../graphql/client/queries"
 
 
 
-
-function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid,name,photo,timestamp}) {
+function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}) {
   const [user] = useAuthState(auth);                   //return the data of the person who is logged in and is currently in this page 
   const router = useRouter();       //hook used to get the query in the route of this page.
 
@@ -362,30 +363,31 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
       </div>
     </div>
   );
+  
 }
 
 export default SinglePost;
 
 export async function getServerSideProps(context) {
-  const docRef = doc(collection(db, "posts"), context.query.id);     
+  const id = context.query.id;
+  const {data} = await client.query({
+    query:GET_POST,
+    variables:{
+      postId:id
+    }
+  });
 
-  const postRef = await getDoc(docRef);
-
-  console.log("typeof: ", postRef.data());
 
   return {
     props: {
-      title: postRef.data().title,
-      goal: postRef.data().goal,
-      description: postRef.data().description,
-      duration: postRef.data().duration,
-      weeklyhrs: postRef.data().weeklyhrs,
-      membercount: postRef.data().membercount,
-      skills: postRef.data().skills,
-      userid: postRef.data().userid,
-      photo: postRef.data().photo,
-      timestamp: postRef.data().timestamp?.toDate().getTime(),
-      name: postRef.data()?.name,
+      title: data.post.title,
+      goal: data.post.goal,
+      description: data.post.description,
+      duration: data.post.duration,
+      weeklyhrs: data.post.weeklyhrs,
+      membercount: data.post.membercount,
+      skills: data.post.skills,
+      userid:data.post.postedBy.id,
     },
   };
 }

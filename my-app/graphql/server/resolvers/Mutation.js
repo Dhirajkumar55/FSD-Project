@@ -1,5 +1,5 @@
-import User from "../../models/User";
-import Post from "../../models/Post";
+import User from "../../../models/User";
+import Post from "../../../models/Post";
 import {ApolloError} from "apollo-server-errors";
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
@@ -69,7 +69,7 @@ async function login(parent, args, context, info){
                 email
             }, 
             process.env.APP_SECRET_KEY,
-            {expiresIn:"24h"}
+            {expiresIn:"2h"}
         );
     
         user.token = token;
@@ -77,7 +77,6 @@ async function login(parent, args, context, info){
         return {
             token,
             user:user
-
         }
     }
     else{
@@ -92,6 +91,11 @@ async function createPost(parent, args, context, info){
     
     if(!user_id){
         throw new ApolloError("Invalid Authorization", "NOT_AUTHORIZED")
+    }
+
+    const user = await User.findById(user_id);
+    if(!user){
+        throw new ApolloError("Invalid User", "USER_NOT_FOUND");
     }
 
     // create a new post and save it in the database
@@ -109,7 +113,7 @@ async function createPost(parent, args, context, info){
     const res = await newPost.save();
 
     // save the postid in the User's appliedTo field
-    const user = await User.findById(user_id);
+    
     user.posts.push(newPost._id);
     await user.save();
 
@@ -127,6 +131,9 @@ async function applyToPost(parent, args, context, info){
 
     // store the post id in the User's appliedTo field
     const user = await User.findById(user_id);
+    if(!user){
+        throw new ApolloError("Invalid User", "USER_NOT_FOUND")
+    }
     // check if the user has already applied to the post
     if(!user.appliedTo.includes(postId)){
         user.appliedTo.push(postId);

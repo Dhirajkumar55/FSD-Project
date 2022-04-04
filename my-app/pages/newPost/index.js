@@ -19,10 +19,13 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import {useRouter} from "next/router";
 import {signOut} from 'firebase/auth'
-
+import {useQuery} from "@apollo/client"
+import {GET_POSTS} from "../../graphql/client/queries"
+import pic from "../../public/profilepic.png"
 
 function Posts() {
 
+  
 
     // the useAuthState hook is used for maintaining the user status, whether he is logged in or not.
     // it also returns a loading state which tells us that whether the user is logged in or not
@@ -30,7 +33,7 @@ function Posts() {
     // and false once we get the user is logged in
     // Note: that this hook is also decalred and used in other files, 
     //so the above expalnation holds true for those files too.
-  const [user,loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
     // this hook is used to populate option based on the user selection in the filter section
   const [option,setOption] = useState(0);
@@ -40,6 +43,7 @@ function Posts() {
     // this is the useRouter hook 
   const router = useRouter();
 
+ 
 
   // the postRef is a reference to the posts collection in the firebase
   // the reference to the collection changes based on the filter selection.
@@ -80,7 +84,7 @@ function Posts() {
   // once the postRef has been set based on the option value
   // this useCollection hook is used to listn to the firebase databse for any new docs added
   // and displays them in real time.
-  const [posts, loadingPosts] = useCollection(postRef());
+  //const [posts, loadingPosts] = useCollection(postRef());
   
   // this setClas, useState related hook is used to diplay the sortby dropdown
   //when clas = "0px" is set the sortby drop down is not in action
@@ -108,6 +112,9 @@ function Posts() {
     }
   },[user])
 
+  const {loading1, error, data} = useQuery(GET_POSTS);
+  if(loading1) return <p>Loading...</p>
+  
   
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
@@ -132,13 +139,14 @@ function Posts() {
       <Script
         src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
         strategy="beforeInteractive"
       />
       <Script
         src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
       />
       <div
         className={styles.header}
@@ -400,13 +408,14 @@ function Posts() {
                 className={styles.container_new}
                 style={{ marginTop: "0px", paddingTop: "100px" }}
               >
-                {posts?.docs?.filter((post)=>{
+                {
+                data?.posts?.filter((post)=>{
                   console.log(post)
                     if (search==""){
                       return post;
                     }
-                      for (const skill in post.data()?.skills){
-                        if (post.data()?.skills[skill].toLowerCase().includes(search.toLowerCase())){
+                      for (const skill in post?.skills){
+                        if (post?.skills[skill].toLowerCase().includes(search.toLowerCase())){
                           return post;
                         }
                       }
@@ -419,19 +428,19 @@ function Posts() {
                           <Image
                             width="80rem"
                             height="80rem"
-                            src={post?.data()?.photo}
+                            src={pic}
                             alt="user__image"
                             className={styles.user__image_new}
                           />
-                          {console.log(post?.data()?.photoURL)}
+                          {console.log(post?.postedBy?.imageURL)}
                           <div className={styles.user__info_new}>
-                            <h5> {post?.data()?.name}</h5>
+                            <h5> {post?.postedBy?.name}</h5>
                             <small>
                               {" "}
                               {
-                                post?.data()?.timestamp
+                                post?.createdAt
                                   ? (
-                                    <TimeAgo datetime={post?.data()?.timestamp.toDate()} />
+                                    <TimeAgo datetime={post?.createdAt} />
                                   ) : ("...")
                               }
                             </small>
@@ -439,32 +448,32 @@ function Posts() {
                         </div>
                       </div>
                       <a
-                        href={`http://localhost:3000/newPost/${post.id}`}
+                        href={`http://localhost:3000/newPost/${post?.id}`}
                         style={{ textDecoration: "none", color: "#1a4765" }}
                       >
-                        <h5>{post.data().title}</h5>{" "}
+                        <h5>{post?.title}</h5>{" "}
                       </a>
-                      <p>{post.data().goal}</p>
+                      <p>{post?.goal}</p>
 
                       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
                         <div style={{ display: "flex", flexDirection: "row", flex: "left" }}>
                           <Tooltip color="primary" sx={{ width: "1.5rem", height: "1.5rem" }} title="Duration" arrow>
                             <AccessTimeIcon />
                           </Tooltip>
-                          <p>&nbsp;{post.data().duration} Weeks</p>
+                          <p>&nbsp;{post?.duration} Weeks</p>
                         </div>
                         <div style={{ display: "flex", flexDirection: "row", }}>
                           <Tooltip color="secondary" sx={{ width: "1.5rem", height: "1.5rem" }} title="Weekly Hours" arrow>
                             <HourglassEmptyIcon />
                           </Tooltip>
-                          <p>&nbsp;{post.data().weeklyhrs} hrs/week</p>
+                          <p>&nbsp;{post?.weeklyhrs} hrs/week</p>
                         </div>
                       </div>
                       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
                         <Tooltip color="secondary" sx={{ width: "1.5rem", height: "1.5rem" }} title="Team Size" arrow>
                           <GroupsOutlinedIcon />
                         </Tooltip>
-                        <p>&nbsp;{post.data().membercount} members</p>
+                        <p>&nbsp;{post?.membercount} members</p>
                       </div>
 
                       <ul
@@ -490,7 +499,7 @@ function Posts() {
                             }}
                           ></i>
                         </li>
-                        {post.data().skills.map((pst) => (
+                        {post?.skills.map((pst) => (
                           <li
                             key={pst.id}
                             style={{

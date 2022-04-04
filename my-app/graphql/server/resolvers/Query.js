@@ -1,5 +1,5 @@
-import User from "../../models/User";
-import Post from "../../models/Post";
+import User from "../../../models/User";
+import Post from "../../../models/Post";
 
 async function posts(parent, args, context, info){
     const res = await Post.find({});
@@ -13,4 +13,10 @@ async function user(parent, args, context, info){
     return res;
 }
 
-export {posts,user};
+async function post(parent, args, context, info){
+    const id = args.id;
+    const res = await Post.findById(id);
+    return res;
+}
+
+export {posts,user,post};

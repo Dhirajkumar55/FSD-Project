@@ -1,8 +1,8 @@
 import {ApolloServer} from 'apollo-server-micro';
 import dbConnect from "../../utils/dbConnect"
 import Cors from 'micro-cors';
-import {typeDefs} from '../../graphql/typedef';
-import {resolvers} from "../../graphql/resolvers/rootResolver";
+import {typeDefs} from '../../graphql/server/typedef';
+import {resolvers} from "../../graphql/server/resolvers/rootResolver";
 import {getUserId} from "../../utils/authorizationMiddleware"
 import { ApolloError } from 'apollo-server-errors';
 const cors = Cors();
