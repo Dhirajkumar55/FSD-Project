@@ -309,7 +309,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
           </div>
         </div>
         <div className="sidebar-item submit-comment">
-          <div Name="sidebar-heading">
+          <div name="sidebar-heading">
             <h2>WANNA ADD SOMETHING ?? </h2>
           </div>
           <div className="content">
