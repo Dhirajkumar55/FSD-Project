@@ -2,7 +2,12 @@ import User from "../../../models/User";
 import Post from "../../../models/Post";
 
 async function posts(parent, args, context, info){
-   
+    if(args?.filter){
+        const val = args?.filter;
+        const res = await Post.find({postedBy:val});
+        return res;
+    }
+
     if(args?.orderBy?.duration){
         const val = args.orderBy.duration === "asc"?"duration":"-duration";
         const res = await Post.find({}).sort(val).exec();

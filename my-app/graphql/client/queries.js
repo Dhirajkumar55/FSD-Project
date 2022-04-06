@@ -1,8 +1,8 @@
 import {gql} from "@apollo/client";
 
 export const GET_POSTS = gql`
-    query Posts($orderBy: PostOrderByInput) {
-        posts(orderBy: $orderBy) {
+    query Posts($filter: String,$orderBy: PostOrderByInput) {
+        posts(filter: $filter,orderBy: $orderBy) {
             id
             title
             createdAt

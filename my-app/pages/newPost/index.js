@@ -75,10 +75,7 @@ function Posts() {
     }
     else if(option === 6){
        // this is when the my posts button is clicked
-      return query(collection(db, "posts"), where("userid","==", user?.email));
-    }
-    else if(option ===7){
-      
+      return {variables:{filter:user?.user_id}};
     }
   }
 
@@ -116,10 +113,12 @@ function Posts() {
     }
   },[user])
 
-  const {loading1, error, data} = useQuery(GET_POSTS,orderByOptions());
+    const {loading1, error, data} = useQuery(GET_POSTS,orderByOptions());
+    if(loading1) return <p>Loading...</p>
   
-  if(loading1) return <p>Loading...</p>
-  if(!loading1) console.log(data?.posts);
+
+  // const {loading2,err,data1} = useQuery(USER_POSTS,{variables:{email:user?.email}});
+  // if(!loading2) console.log(data1);
   
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
