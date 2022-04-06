@@ -22,7 +22,8 @@ import {signOut} from 'firebase/auth'
 import {useQuery} from "@apollo/client"
 import {GET_POSTS} from "../../graphql/client/queries"
 import pic from "../../public/profilepic.png"
-
+import {AuthContext} from "../../context/auth"
+import {useContext} from "react"
 function Posts() {
 
   
@@ -33,7 +34,7 @@ function Posts() {
     // and false once we get the user is logged in
     // Note: that this hook is also decalred and used in other files, 
     //so the above expalnation holds true for those files too.
-  const [user] = useAuthState(auth);
+    const {user} = useContext(AuthContext);
 
     // this hook is used to populate option based on the user selection in the filter section
   const [option,setOption] = useState(0);

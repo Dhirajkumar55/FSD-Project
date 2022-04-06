@@ -16,6 +16,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {signInWithPopup} from 'firebase/auth'
 import {auth,db,provider} from '../firebase'
 import {useRouter} from 'next/router'
+import { AuthContext } from '../context/auth';
+import {useContext} from "react"
+import {useMutation} from "@apollo/client"
+import {LOGIN_USER} from "../graphql/client/queries"
+import { Login } from '@mui/icons-material';
 
 
 function Copyright(props) {
@@ -41,9 +46,20 @@ const theme = createTheme();
 // and the signin method is implemented using Google auth provider, which is taken from a hook - useAuthState()
 function SignIn() { 
   const router = useRouter();
+
+  const context=useContext(AuthContext);
+
+  const [LogIn, {data,error,loading}] = useMutation(LOGIN_USER,{
+    update(_, {data: {login : userData}}){
+        console.log(userData);
+        context.logIn(userData);
+    }
+});
   const handleSubmit = (event) => {
     event.preventDefault();
-    signInWithPopup(auth,provider)
+    const email = event?.target?.email?.value;
+    const password = event?.target?.password?.value;
+    LogIn({variables:{email:email, password:password}});
     router.push('/');
   };
 
@@ -98,15 +114,7 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <a style={{padding:"12rem"}}>Or</a>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign in With Google
-            </Button>
+            
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

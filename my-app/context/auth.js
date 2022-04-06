@@ -1,27 +1,9 @@
-import React , {useReducer, createContext} from 'react';
+import React , {useReducer, createContext, useEffect} from 'react';
 import jwtDecode from 'jwt-decode';
 
 const initialState = {
     user: null
   };
-
-    if(typeof window !== 'undefined'){
-
-        if (localStorage?.getItem('jwtToken')!=='undefined') {
-            
-            // const decodedToken = jwtDecode(localStorage?.getItem('jwtToken'));
-        
-            // if (decodedToken?.exp * 1000 < Date.now()) {
-            //     localStorage?.removeItem('jwtToken');
-            // } else {
-            //     initialState.user = decodedToken;
-            // }
-        }
-    }
-    
-
-
-
 
 const AuthContext = createContext({
     user:null,
@@ -47,12 +29,24 @@ function authReducer(state,action){
     }
 }
 
-function AuthProvider({children}){
+function AuthProvider(props){
     const [state,dispatch] = useReducer(authReducer, initialState)
+
+        if(typeof window !== 'undefined'){
+            if (localStorage?.getItem('jwtToken') !== 'undefined') {
+                const decodedToken = jwtDecode(localStorage?.getItem('jwtToken'));
+                if (decodedToken.exp * 1000 < Date.now()) {
+                    localStorage?.removeItem('jwtToken');
+                } 
+                else {
+                    state.user = decodedToken;
+                }
+            }
+        }
 
     function logIn(userData){
 
-        console.log(userData);
+        console.log("userData:",userData);
             localStorage.setItem('jwtToken', userData?.token);
         
         dispatch({
@@ -71,7 +65,7 @@ function AuthProvider({children}){
     }
 
     return (
-        <AuthContext.Provider value = {{user:state.user, logIn, logOut}}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value = {{user:state.user, logIn, logOut}} {...props}/>
     )
 }
 

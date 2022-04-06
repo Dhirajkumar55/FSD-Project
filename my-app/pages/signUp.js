@@ -40,6 +40,8 @@ function SignUp() {
     router.push('/');
   };
 
+  const theme = createTheme();
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

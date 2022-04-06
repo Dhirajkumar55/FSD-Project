@@ -18,11 +18,12 @@ import Tooltip from '@mui/material/Tooltip'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {client} from "../../graphql/client/clientSetup"
 import {GET_POST} from "../../graphql/client/queries"
-
+import { AuthContext } from '../../context/auth';
+import {useContext} from "react"
 
 
 function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}) {
-  const [user] = useAuthState(auth);                   //return the data of the person who is logged in and is currently in this page 
+ const {user} = useContext(AuthContext) ;                 //return the data of the person who is logged in and is currently in this page 
   const router = useRouter();       //hook used to get the query in the route of this page.
 
 

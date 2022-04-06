@@ -3,11 +3,12 @@ import {useAuthState} from 'react-firebase-hooks/auth'
 import {auth} from '../../firebase';
 import {signOut} from 'firebase/auth'
 import Link from "next/link";
-
+import { AuthContext } from '../../context/auth';
+import {useContext} from "react"
 
 function Navbar(props){
 
-    const [user] = useAuthState(auth);
+    const {user} = useContext(AuthContext);
 
     function LoggedInUser(){
         return (

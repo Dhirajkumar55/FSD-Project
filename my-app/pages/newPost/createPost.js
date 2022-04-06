@@ -10,10 +10,11 @@ import Restricted from '../../components/Restricted';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
-
+import { AuthContext } from '../../context/auth';
+import {useContext} from "react"
 function CreatePost(){
     const router = useRouter();                  //hook used to get the query in the route of this page.
-    const [user] = useAuthState(auth);           //return the data of the person who is logged in and is currently in this page 
+    const {user} = useContext(AuthContext);           //return the data of the person who is logged in and is currently in this page 
 
     const [success,setSuccess] = useState(0);   //hook to show success message when the post is created
     const [failure,setFailure] = useState(0);   //hook to show failed message when the post is not created
