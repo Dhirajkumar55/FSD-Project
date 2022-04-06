@@ -2,6 +2,25 @@ import User from "../../../models/User";
 import Post from "../../../models/Post";
 
 async function posts(parent, args, context, info){
+   
+    if(args?.orderBy?.duration){
+        const val = args.orderBy.duration === "asc"?"duration":"-duration";
+        const res = await Post.find({}).sort(val).exec();
+        return res;
+    }
+
+    else if(args?.orderBy?.createdAt){
+        const val = args.orderBy.createdAt === "asc"?"createdAt":"-createdAt";
+        const res = await Post.find({}).sort(val).exec();
+        return res;
+    }
+
+    else if(args?.orderBy?.membercount){
+        const val = args.orderBy.membercount === "asc"?"membercount":"-membercount";
+        const res = await Post.find({}).sort(val).exec();
+        return res;
+    }
+
     const res = await Post.find({});
     return res;
 }

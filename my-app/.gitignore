@@ -36,3 +36,4 @@ yarn-error.log*
 #testing files
 /pages/test.js
 /pages/test1.js
+/pages/test2.js

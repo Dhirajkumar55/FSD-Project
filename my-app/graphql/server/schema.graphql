@@ -1,9 +1,19 @@
 type Query{
-    posts: [Post!]!
+    posts(orderBy: PostOrderByInput): [Post!]!
     post(id: ID!): Post
     user(email: String!): User
 }
 
+input PostOrderByInput{
+  createdAt: Sort
+  membercount: Sort
+  duration: Sort
+}
+
+enum Sort{
+  asc
+  desc
+}
 
 type Mutation {
   signup(email: String!,username: String!, password: String!, name: String!): AuthPayload
