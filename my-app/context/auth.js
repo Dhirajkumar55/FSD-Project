@@ -33,7 +33,8 @@ function AuthProvider(props){
     const [state,dispatch] = useReducer(authReducer, initialState)
 
         if(typeof window !== 'undefined'){
-            if (localStorage?.getItem('jwtToken') !== 'undefined') {
+            console.log(localStorage?.getItem('jwtToken'));
+            if (localStorage?.getItem('jwtToken') !== 'undefined' && localStorage?.getItem('jwtToken')!==null) {
                 const decodedToken = jwtDecode(localStorage?.getItem('jwtToken'));
                 if (decodedToken.exp * 1000 < Date.now()) {
                     localStorage?.removeItem('jwtToken');

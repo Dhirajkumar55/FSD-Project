@@ -20,7 +20,7 @@ import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import {useRouter} from "next/router";
 import {signOut} from 'firebase/auth'
 import {useQuery} from "@apollo/client"
-import {GET_POSTS} from "../../graphql/client/queries"
+import {GET_POSTS,USER_POSTS} from "../../graphql/client/queries"
 import pic from "../../public/profilepic.png"
 import {AuthContext} from "../../context/auth"
 import {useContext} from "react"
@@ -34,7 +34,7 @@ function Posts() {
     // and false once we get the user is logged in
     // Note: that this hook is also decalred and used in other files, 
     //so the above expalnation holds true for those files too.
-    const {user} = useContext(AuthContext);
+    const {user,logOut} = useContext(AuthContext);
 
     // this hook is used to populate option based on the user selection in the filter section
   const [option,setOption] = useState(0);
@@ -48,30 +48,30 @@ function Posts() {
 
   // the postRef is a reference to the posts collection in the firebase
   // the reference to the collection changes based on the filter selection.
-  const postRef = ()=>{
+  const orderByOptions = ()=>{
     if(option === 0){
       // this is when no filter is selected
-      return collection(db, "posts");
+      return {variables:{orderBy:null}};
     }
     else if(option === 1){
       // this is when the latest filter is selected
-      return query(collection(db, "posts"), orderBy("timestamp", "desc"));
+      return {variables:{orderBy:{createdAt:"desc"}}};
     }
     else if(option === 2){
        // this is when the teamsize(ascending) filter is selected
-      return query(collection(db, "posts"), orderBy("membercount", "asc"));
+      return {variables:{orderBy:{membercount:"asc"}}}
     }
     else if(option === 3){
       // this is when the teamsize(descending) filter is selected
-      return query(collection(db, "posts"), orderBy("membercount", "desc"));
+      return {variables:{orderBy:{membercount:"desc"}}}
     }
     else if(option === 4){
       // this is when the duration(ascending) filter is selected
-      return query(collection(db, "posts"), orderBy("duration", "asc"));
+      return {variables:{orderBy:{duration:"asc"}}}
     }
     else if(option === 5){
       // this is when the duration(descending) filter is selected
-      return query(collection(db, "posts"), orderBy("duration", "desc"));
+      return {variables:{orderBy:{duration:"desc"}}}
     }
     else if(option === 6){
        // this is when the my posts button is clicked
@@ -82,6 +82,9 @@ function Posts() {
     }
   }
 
+  // useEffect(()=>{
+
+  // },[option])
   // once the postRef has been set based on the option value
   // this useCollection hook is used to listn to the firebase databse for any new docs added
   // and displays them in real time.
@@ -113,9 +116,10 @@ function Posts() {
     }
   },[user])
 
-  const {loading1, error, data} = useQuery(GET_POSTS);
-  if(loading1) return <p>Loading...</p>
+  const {loading1, error, data} = useQuery(GET_POSTS,orderByOptions());
   
+  if(loading1) return <p>Loading...</p>
+  if(!loading1) console.log(data?.posts);
   
   return (
     <div style={{ backgroundColor: "#fffefd" }}>
@@ -249,7 +253,7 @@ function Posts() {
                 </li>
               </ul>
               <Link href ="/">
-                    <a  onClick={()=>signOut(auth)} className = "blue-button">Sign Out</a>
+                    <a  onClick={()=>logOut()} className = "blue-button">Sign Out</a>
                 </Link>
             </div>
             ):(
@@ -411,7 +415,6 @@ function Posts() {
               >
                 {
                 data?.posts?.filter((post)=>{
-                  console.log(post)
                     if (search==""){
                       return post;
                     }
@@ -433,7 +436,7 @@ function Posts() {
                             alt="user__image"
                             className={styles.user__image_new}
                           />
-                          {console.log(post?.postedBy?.imageURL)}
+                          
                           <div className={styles.user__info_new}>
                             <h5> {post?.postedBy?.name}</h5>
                             <small>
@@ -500,7 +503,7 @@ function Posts() {
                             }}
                           ></i>
                         </li>
-                        {post?.skills.map((pst) => (
+                        {post?.skills?.map((pst) => (
                           <li
                             key={pst.id}
                             style={{

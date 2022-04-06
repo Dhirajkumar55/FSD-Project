@@ -1,22 +1,21 @@
 import {gql} from "@apollo/client";
 
 export const GET_POSTS = gql`
-    query Posts {
-        posts {
+    query Posts($orderBy: PostOrderByInput) {
+        posts(orderBy: $orderBy) {
             id
             title
-            description
+            createdAt
             goal
             membercount
             duration
             weeklyhrs
             skills
-            createdAt
-            postedBy {  
+            postedBy {
                 id
                 name
-                username
                 email
+                username
                 imageURL
             }
         }
@@ -55,3 +54,27 @@ mutation Login($email: String!, $password: String!) {
   }
 }
 `
+
+export const USER_POSTS = gql`
+    query User($email: String!) {
+        user(email: $email) {
+            posts {
+                id
+                title
+                goal
+                membercount
+                duration
+                weeklyhrs
+                skills
+                createdAt
+                postedBy {
+                    id
+                    name
+                    username
+                    email
+                    imageURL
+                }
+            }
+        }
+    }
+`;

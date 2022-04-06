@@ -8,7 +8,7 @@ import {useContext} from "react"
 
 function Navbar(props){
 
-    const {user} = useContext(AuthContext);
+    const {user,logOut} = useContext(AuthContext);
 
     function LoggedInUser(){
         return (
@@ -17,7 +17,7 @@ function Navbar(props){
                     <a className = "logo">proSpaces</a>
                 </Link>
                 <Link href ="/">
-                    <a  onClick={()=>signOut(auth)} className = "blue-button">Sign Out</a>
+                    <a  onClick={()=>logOut()} className = "blue-button">Sign Out</a>
                 </Link>
             </div>
         )
