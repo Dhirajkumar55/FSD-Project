@@ -14,11 +14,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useRouter} from 'next/router'
 import { AuthContext } from '../context/auth';
-import {useContext} from "react"
+import {useContext,useState,useEffect} from "react"
 import {useMutation} from "@apollo/client"
 import {LOGIN_USER} from "../graphql/client/queries"
 import { Login } from '@mui/icons-material';
-
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -46,20 +46,49 @@ function SignIn() {
 
   const context=useContext(AuthContext);
 
-  const [LogIn, {data,error,loading}] = useMutation(LOGIN_USER,{
+  const [err,setErr]= useState({
+    isError: false,
+    message:null,
+    code:null
+  });
+  const [success,setSuccess] = useState(0);    //update success message
+  const [failure,setFailure] = useState(0);    //update failure message
+
+  useEffect(()=>{
+    
+  },[failure])
+
+  const [LogIn, {data,error,loading}] =  useMutation(LOGIN_USER,{
     update(_, {data: {login : userData}}){
         console.log(userData);
         context.logIn(userData);
+    },
+    onError(e){
+      setErr({
+        isError: true,
+        code:null
+      });
     }
   });
-  
+
+  console.log(err);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event?.target?.email?.value;
     const password = event?.target?.password?.value;
+    if(!(email.includes('@'))){
+      setErr({isError: true, code:"INVALID_EMAIL_ADDRESS", message:"Please enter a valid email address"});
+      setFailure(1);
+      return;
+    }
+    else if(password.length < 8){
+      setErr({isError: true, code:"PASSWORD_LESS_THAN_8_CHARACTERS", message:"Please enter a password more than 8 characters"});
+      setFailure(1);
+      return;
+    }
     LogIn({variables:{email:email, password:password}});
-    router.push('/');
+    router.push('/')
   };
 
   return (
@@ -129,6 +158,10 @@ function SignIn() {
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
+        {
+          failure?(<Alert severity="error" onClose={() => {setFailure(0)}}>{err.message}</Alert>):(<></>)
+        }
+        
       </Container>
     </ThemeProvider>
   );

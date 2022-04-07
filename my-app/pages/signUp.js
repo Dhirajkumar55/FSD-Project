@@ -16,10 +16,11 @@ import {signInWithPopup} from 'firebase/auth'
 import {auth,db,provider} from '../firebase'
 import {useRouter} from 'next/router'
 import { AuthContext } from '../context/auth';
-import {useContext} from "react"
+import {useContext,useState} from "react"
 import {useMutation} from "@apollo/client"
 import {REGISTER_USER} from "../graphql/client/queries"
 import styled from 'styled-components'
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -42,6 +43,15 @@ function SignUp() {
 
   const context=useContext(AuthContext);
 
+  const [err,setErr]= useState({
+    isError: false,
+    message:null,
+    code:null
+  });
+
+  const [success,setSuccess] = useState(0);    //update success message
+  const [failure,setFailure] = useState(0);    //update failure message
+
   const [SignUp, {data,error,loading}] = useMutation(REGISTER_USER,{
     update(_, {data: {signup : userData}}){
         console.log(userData);
@@ -57,6 +67,16 @@ function SignUp() {
     const email = event?.target?.email?.value;
     const password = event?.target?.password?.value;
     const name = firstName + " " + lastName;
+    if(!(email.includes('@'))){
+      setErr({isError: true, code:"INVALID_EMAIL_ADDRESS", message:"Please enter a valid email address"});
+      setFailure(1);
+      return;
+    }
+    else if(password.length < 8){
+      setErr({isError: true, code:"PASSWORD_LESS_THAN_8_CHARACTERS", message:"Please enter a password more than 8 characters"});
+      setFailure(1);
+      return;
+    }
     SignUp({variables:{email:email, username:username, password:password, name:name}});
     router.push('/');
   };
@@ -163,6 +183,9 @@ function SignUp() {
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
+        {
+          failure?(<Alert severity="error" onClose={() => {setFailure(0)}}>{err.message}</Alert>):(<></>)
+        }
       </Container>
     </ThemeProvider>
   );

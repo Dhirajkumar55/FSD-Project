@@ -159,5 +159,30 @@ async function applyToPost(parent, args, context, info){
     return res;
 }
 
+async function updatePost(parent, args, context, info){
+    const user_id  = context.user;
+    
+    const postId = args.id;
+   
+    const post = await Post.findById(postId).populate('postedBy').exec();
 
-export {signup,login,createPost,applyToPost};
+    // check whether the post is postedBy the same user who want's to update the post
+    if(post.postedBy._id.valueOf()!==user_id){
+        throw new ApolloError('Invalid Authorization','NOT_AUTHORIZED');
+    }
+
+    const {title,goal,description,duration,weeklyhrs,membercount,skills}=args;
+
+    // field to filter from
+    const filter = {_id:postId};
+    // fields to update
+    const update = {title,goal,description,duration,weeklyhrs,membercount,skills};
+
+    const res = await Post.findOneAndUpdate(filter, update,{new: true}).populate('postedBy').exec();
+
+    //console.log(res);
+    return res;
+}
+
+
+export {signup,login,createPost,applyToPost,updatePost};

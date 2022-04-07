@@ -171,24 +171,26 @@ export default ModifyPost;
 
 export async function getServerSideProps(context){
 
-    const docRef = doc(collection(db, 'posts'),context.query.pid);
-
-    const postRef = await getDoc(docRef);
-    
-    
-    console.log("typeof: ",typeof postRef.data());
-    
-    return {
-        props : { 
-            title: postRef.data().title,
-            goal : postRef.data().goal,
-            description: postRef.data().description,
-            duration : postRef.data().duration,
-            weeklyhrs : postRef.data().weeklyhrs,
-            membercount : postRef.data().membercount,
-            skills : postRef.data().skills,
-            userid: postRef.data().userid,
+    const id = context.query.pid;
+    const {data} = await client.query({
+        query:GET_POST,
+        variables:{
+        postId:id
         }
-    }
+    });
+
+
+  return {
+    props: {
+      title: data.post.title,
+      goal: data.post.goal,
+      description: data.post.description,
+      duration: data.post.duration,
+      weeklyhrs: data.post.weeklyhrs,
+      membercount: data.post.membercount,
+      skills: data.post.skills,
+      userid:data.post.postedBy.id,
+    },
+  };
 }
 
