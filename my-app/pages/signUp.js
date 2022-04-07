@@ -15,6 +15,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {signInWithPopup} from 'firebase/auth'
 import {auth,db,provider} from '../firebase'
 import {useRouter} from 'next/router'
+import { AuthContext } from '../context/auth';
+import {useContext} from "react"
+import {useMutation} from "@apollo/client"
+import {REGISTER_USER} from "../graphql/client/queries"
 
 function Copyright(props) {
   return (
@@ -34,9 +38,25 @@ function Copyright(props) {
 function SignUp() {
   
   const router = useRouter();
+
+  const context=useContext(AuthContext);
+
+  const [SignUp, {data,error,loading}] = useMutation(REGISTER_USER,{
+    update(_, {data: {signup : userData}}){
+        console.log(userData);
+        context.signUp(userData);
+    }
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    signInWithPopup(auth, provider);
+    const firstName = event?.target?.firstName?.value;
+    const lastName = event?.target?.lastName?.value;
+    const username = event?.target?.username?.value;
+    const email = event?.target?.email?.value;
+    const password = event?.target?.password?.value;
+    const name = firstName + " " + lastName;
+    SignUp({variables:{email:email, username:username, password:password, name:name}});
     router.push('/');
   };
 
@@ -87,6 +107,16 @@ function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
@@ -118,15 +148,6 @@ function SignUp() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
-            </Button>
-            <a style={{padding:"12rem"}}>Or</a>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up With Google
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

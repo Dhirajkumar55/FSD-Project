@@ -8,7 +8,8 @@ const initialState = {
 const AuthContext = createContext({
     user:null,
     logIn:()=>{},
-    logOut: ()=>{}
+    logOut: ()=>{},
+    signUp:()=>{},
 })
 
 function authReducer(state,action){
@@ -24,6 +25,12 @@ function authReducer(state,action){
                 user:null
             }
         }
+        case 'SIGNUP':{
+            return {
+                ...state,
+                user:action?.payload
+            }
+        }
         default:
             return state;
     }
@@ -32,23 +39,30 @@ function authReducer(state,action){
 function AuthProvider(props){
     const [state,dispatch] = useReducer(authReducer, initialState)
 
-        if(typeof window !== 'undefined'){
-            console.log(localStorage?.getItem('jwtToken'));
-            if (localStorage?.getItem('jwtToken') !== 'undefined' && localStorage?.getItem('jwtToken')!==null) {
-                const decodedToken = jwtDecode(localStorage?.getItem('jwtToken'));
-                if (decodedToken.exp * 1000 < Date.now()) {
-                    localStorage?.removeItem('jwtToken');
-                } 
-                else {
-                    state.user = decodedToken;
-                }
+    if(typeof window !== 'undefined'){
+        console.log(localStorage?.getItem('jwtToken'));
+        if (localStorage?.getItem('jwtToken') !== 'undefined' && localStorage?.getItem('jwtToken')!==null) {
+            const decodedToken = jwtDecode(localStorage?.getItem('jwtToken'));
+            if (decodedToken.exp * 1000 < Date.now()) {
+                localStorage?.removeItem('jwtToken');
+            } 
+            else {
+                state.user = decodedToken;
             }
         }
+    }
+
+    function signUp(userData){
+        localStorage?.setItem('jwtToken', userData?.token);
+        dispatch({
+            type: 'SIGNUP',
+            payload: userData,
+        })
+    }
 
     function logIn(userData){
 
-        console.log("userData:",userData);
-            localStorage.setItem('jwtToken', userData?.token);
+        localStorage.setItem('jwtToken', userData?.token);
         
         dispatch({
             type: 'LOGIN',
@@ -56,9 +70,9 @@ function AuthProvider(props){
         })
     }
 
-    function logOut(userData){
+    function logOut(){
         
-            localStorage?.removeItem('jwtToken');
+        localStorage?.removeItem('jwtToken');
         
         dispatch({
             type: 'LOGOUT',
@@ -66,7 +80,7 @@ function AuthProvider(props){
     }
 
     return (
-        <AuthContext.Provider value = {{user:state.user, logIn, logOut}} {...props}/>
+        <AuthContext.Provider value = {{user:state.user, logIn, logOut, signUp}} {...props}/>
     )
 }
 

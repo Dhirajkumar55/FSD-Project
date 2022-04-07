@@ -65,9 +65,8 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
   }
 
 
-
   const modifyFunctionality = () => {         //this function checks if the user loggedin is the person who created the post. if(yes)shows the modify and see response buttons.
-    if (user?.email === userid) {
+    if (user?.user_id === userid) {
       return (
         <div style={{"textAlign":"center"}}>
           <div>
@@ -86,7 +85,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description">
                 <Box sx={style}>
-                  {
+                  {/* {
                     responseRef?.docs?.map((response)=>{return (
                       <div key={response.data().userid}>
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",margin:"0.5rem"}}>
@@ -99,7 +98,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
                         </div>
                       </div>
                     )})
-                  }
+                  } */}
                 </Box>
 
           </Modal>
@@ -163,7 +162,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
             <div id={styles.btndiv}>
               {modifyFunctionality()}
             </div>
-            {user?.email === userid?(
+            {user?.user_id === userid?(
               <div></div>
             ):(
               <div>

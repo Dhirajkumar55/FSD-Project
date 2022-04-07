@@ -78,3 +78,17 @@ export const USER_POSTS = gql`
         }
     }
 `;
+
+export const REGISTER_USER = gql`
+    mutation Signup($email: String!, $username: String!, $password: String!, $name: String!) {
+        signup(email: $email, username: $username, password: $password, name: $name) {
+            token
+            user {
+                id
+                name
+                username
+                email
+            }
+        }
+    }
+`;
