@@ -12,6 +12,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
 import { AuthContext } from '../../context/auth';
 import {useContext} from "react"
+import {CREATE_POST} from "../../graphql/client/queries"
+import {useMutation} from "@apollo/client"
+
 function CreatePost(){
     const router = useRouter();                  //hook used to get the query in the route of this page.
     const {user} = useContext(AuthContext);           //return the data of the person who is logged in and is currently in this page 
@@ -28,6 +31,12 @@ function CreatePost(){
         weeklyhrs:0,
         skills:[]
     })
+
+    const [addPost,{data,err,loading}] = useMutation(CREATE_POST,{
+        update(_,{data:{createPost:data}}){
+            console.log(data);
+        }
+    });
 
     const handleinput = (e)=>{           //function to collect data from form and store in hook.
         let name,value;
@@ -48,22 +57,13 @@ function CreatePost(){
         setNewpost({...newpost,[name]:sList})
     }
 
-    const handlesubmit = (e)=>{              //function that sends data to the firebase after submission.
+    const handlesubmit = async (e)=>{              //function that sends data to the firebase after submission.
         e.preventDefault();
-        const newColRef = collection(db,'posts');
         try{
-            addDoc(newColRef,{
-                userid : user?.email,
-                name: user?.displayName,
-                ...newpost,
-                timestamp:serverTimestamp(),
-                photo:user.photoURL,
-            }).then((snapshot)=>{
-                const postid = snapshot._key.path.segments[1];
-                setTimeout(()=>{
-                    router.push(`/newPost/${postid}`);
-                },2000)
-            })
+            console.log(newpost)
+            const postid=await addPost({variables:{title:newpost.title, description:newpost.description ,goal: newpost.goal, membercount:newpost.membercount, duration:newpost.duration, weeklyhrs:newpost.weeklyhrs, skills:newpost.skills,}})
+            console.log("postid:",postid)
+            router.push(`/newPost/${postid?.data?.createPost?.id}`);
             setSuccess(1);
         }catch(err){
             setFailure(1);

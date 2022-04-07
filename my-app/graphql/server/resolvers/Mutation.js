@@ -31,7 +31,10 @@ async function signup(parent,args,context,info){
     const token = jwt.sign(
         {
             user_id: newUser._id,
-            email
+            email,
+            imageURL:newUser.imageURL,
+            name:newUser.name,
+            username:newUser.username
         }, 
         process.env.APP_SECRET_KEY,
         {expiresIn:"24h"}
@@ -66,7 +69,10 @@ async function login(parent, args, context, info){
         const token = jwt.sign(
             {
                 user_id: user._id,
-                email
+                email,
+                imageURL:user.imageURL,
+                name:user.name,
+                username:user.username
             }, 
             process.env.APP_SECRET_KEY,
             {expiresIn:"2h"}

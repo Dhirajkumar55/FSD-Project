@@ -27,9 +27,7 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
   const router = useRouter();       //hook used to get the query in the route of this page.
 
 
-  const docRef = doc(collection(db, "posts"), router.query.id);     //returns the data from firebase based on the router query
-  const [responseRef]=useCollection(collection(docRef,"AppliedBy"));  //returns the data of the people who applied for a post.
-  responseRef?.docs?.map((response)=>{console.log(response)})
+  
 
 
   const [mdl, setMdl] = useState(false);

@@ -8,20 +8,6 @@ import Footer from "../components/homepage/Footer";
 import {useEffect} from 'react';
 
 function App(){
-
-  const [user,loading] = useAuthState(auth);
-
-  useEffect(()=>{
-    if(user){
-        setDoc(doc(db,'users',user.uid),{
-            email: user.email,
-            lastSeen : serverTimestamp(),
-            photo:user.photoURL,
-            name:user.displayName,
-        },{merge:true})
-    }
-},[user])
-
   return (
     <div>
       <Navbar/>

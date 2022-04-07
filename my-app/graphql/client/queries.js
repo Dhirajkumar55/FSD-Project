@@ -55,6 +55,21 @@ mutation Login($email: String!, $password: String!) {
 }
 `
 
+
+export const REGISTER_USER = gql`
+    mutation Signup($email: String!, $username: String!, $password: String!, $name: String!) {
+        signup(email: $email, username: $username, password: $password, name: $name) {
+            token
+            user {
+                id
+                name
+                username
+                email
+            }
+        }
+    }
+`;
+
 export const USER_POSTS = gql`
     query User($email: String!) {
         user(email: $email) {
@@ -79,16 +94,23 @@ export const USER_POSTS = gql`
     }
 `;
 
-export const REGISTER_USER = gql`
-    mutation Signup($email: String!, $username: String!, $password: String!, $name: String!) {
-        signup(email: $email, username: $username, password: $password, name: $name) {
-            token
-            user {
-                id
-                name
-                username
-                email
-            }
+export const USER_DETAILS = gql`
+    query User($email: String!) {
+        user(email: $email) {
+            id
+            name
+            username
+            imageURL
+            email
         }
     }
+
 `;
+
+export const CREATE_POST = gql`
+     mutation CreatePost($title: String!, $description: String!,$goal: String!, $membercount:Int!, $duration:Int!, $weeklyhrs:Int!, $skills:[String!]!){
+         createPost(title:$title , description:$description , goal:$goal , membercount:$membercount, duration:$duration, weeklyhrs:$weeklyhrs, skills:$skills){
+            id
+         }
+     }
+`

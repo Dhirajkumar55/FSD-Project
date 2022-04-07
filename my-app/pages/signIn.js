@@ -12,9 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import {useAuth} from "../context/AuthUserContext"
-import {signInWithPopup} from 'firebase/auth'
-import {auth,db,provider} from '../firebase'
 import {useRouter} from 'next/router'
 import { AuthContext } from '../context/auth';
 import {useContext} from "react"
@@ -27,8 +24,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="http://localhost:3000">
+        ProSpaces
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -54,7 +51,9 @@ function SignIn() {
         console.log(userData);
         context.logIn(userData);
     }
-});
+  });
+  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event?.target?.email?.value;

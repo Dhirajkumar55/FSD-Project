@@ -1,5 +1,8 @@
 import React , {useReducer, createContext, useEffect} from 'react';
 import jwtDecode from 'jwt-decode';
+import {getUserDetails} from "../utils/getUserDetails";
+import { client } from '../graphql/client/clientSetup';
+import {USER_DETAILS} from '../graphql/client/queries'
 
 const initialState = {
     user: null
@@ -48,6 +51,7 @@ function AuthProvider(props){
             } 
             else {
                 state.user = decodedToken;
+                console.log(decodedToken);
             }
         }
     }

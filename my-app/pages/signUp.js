@@ -19,14 +19,15 @@ import { AuthContext } from '../context/auth';
 import {useContext} from "react"
 import {useMutation} from "@apollo/client"
 import {REGISTER_USER} from "../graphql/client/queries"
+import styled from 'styled-components'
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
+      <Link color="inherit" href="http://localhost:3000">
+        ProSpaces
+      </Link>{''}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -80,6 +81,9 @@ function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          <UserAvatar sx={{ m: 3 , height: '100px', width: '100px'}}/>
+
+         
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -166,3 +170,10 @@ function SignUp() {
 
 
 export default SignUp;
+
+const UserAvatar = styled(Avatar)`
+    cursor: pointer;
+    :hover{
+        opacity:0.8;
+    }
+`;
