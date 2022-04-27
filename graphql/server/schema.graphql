@@ -34,7 +34,7 @@ type Post @cacheControl (maxAge:240){
     weeklyhrs:Int!
     skills:[String!]!
     createdAt: String!
-    postedBy: User!
+    postedBy: User! @cacheControl (inheritMaxAge:true)
     appliedBy: [User!]! 
 }
 
