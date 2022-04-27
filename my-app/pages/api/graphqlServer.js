@@ -5,10 +5,7 @@ import {typeDefs} from '../../graphql/server/typedef';
 import {resolvers} from "../../graphql/server/resolvers/rootResolver";
 import {getUserId} from "../../utils/authorizationMiddleware"
 import { ApolloError } from 'apollo-server-errors';
-const cors = Cors({
-    methods: ['GET','POST','PUT','DELETE'],
-    origin: "*"
-});
+const cors = Cors();
 
 dbConnect();
 
