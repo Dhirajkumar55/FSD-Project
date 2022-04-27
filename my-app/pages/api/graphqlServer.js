@@ -20,7 +20,7 @@ const apolloServer = new ApolloServer({
 
         // check if the token is valid and get the user details
         const user = req && req.headers.authorization? getUserId(req, token): null;
-
+        
         return {
             ...req,
             user

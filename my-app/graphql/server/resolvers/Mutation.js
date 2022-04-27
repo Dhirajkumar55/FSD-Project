@@ -51,6 +51,8 @@ async function signup(parent,args,context,info){
     }
 }
 
+
+
 async function login(parent, args, context, info){
     const {email,password} = args;
 
@@ -91,6 +93,8 @@ async function login(parent, args, context, info){
     }
 }
 
+
+
 async function createPost(parent, args, context, info){
 
     const user_id = context.user;
@@ -127,6 +131,7 @@ async function createPost(parent, args, context, info){
     return res;
 }
 
+
 async function applyToPost(parent, args, context, info){
     const user_id = context.user;
     const postId = args.id;
@@ -159,6 +164,7 @@ async function applyToPost(parent, args, context, info){
     return res;
 }
 
+
 async function updatePost(parent, args, context, info){
     const user_id  = context.user;
     
@@ -180,7 +186,7 @@ async function updatePost(parent, args, context, info){
 
     const res = await Post.findOneAndUpdate(filter, update,{new: true}).populate('postedBy').exec();
 
-    //console.log(res);
+    console.log(res);
     return res;
 }
 

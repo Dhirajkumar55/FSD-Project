@@ -1,5 +1,5 @@
 type Query{
-    posts(filter:String, orderBy: PostOrderByInput): [Post!]!
+    posts(filter:String, orderBy: PostOrderByInput): [Post!]!  
     post(id: ID!): Post
     user(email: String!): User
 }

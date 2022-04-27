@@ -109,8 +109,24 @@ export const USER_DETAILS = gql`
 
 export const CREATE_POST = gql`
      mutation CreatePost($title: String!, $description: String!,$goal: String!, $membercount:Int!, $duration:Int!, $weeklyhrs:Int!, $skills:[String!]!){
-         createPost(title:$title , description:$description , goal:$goal , membercount:$membercount, duration:$duration, weeklyhrs:$weeklyhrs, skills:$skills){
+        createPost(title:$title , description:$description , goal:$goal , membercount:$membercount, duration:$duration, weeklyhrs:$weeklyhrs, skills:$skills){
             id
-         }
-     }
-`
+        }
+    }
+`;
+
+export const UPDATE_POST = gql`
+    mutation UpdatePost($updatePostId: ID!, $title: String, $description: String, $skills: [String!], $weeklyhrs: Int, $duration: Int, $membercount: Int, $goal: String) {
+        updatePost(id: $updatePostId, title: $title, description: $description, skills: $skills, weeklyhrs: $weeklyhrs, duration: $duration, membercount: $membercount, goal: $goal) {
+            id
+            title
+            description
+            goal
+            membercount
+            duration
+            weeklyhrs
+            skills
+            createdAt
+        }
+    }
+`;

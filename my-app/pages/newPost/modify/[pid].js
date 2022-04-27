@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import {useRouter} from 'next/router'
 import {db,auth} from '../../../firebase';
 import styled from 'styled-components';
@@ -10,11 +10,15 @@ import Restricted from '../../../components/Restricted';
 import Tooltip from '@mui/material/Tooltip'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Alert from '@mui/material/Alert';
+import {UPDATE_POST,GET_POST} from "../../../graphql/client/queries"
+import {useMutation} from "@apollo/client";
+import {AuthContext} from "../../../context/auth"
+import {client} from "../../../graphql/client/clientSetup"
 
 function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skills,userid}){
 
-    const [user] = useAuthState(auth);   //return the data of the person who is logged in and is currently in this page 
-    const sameUser = user?.email == userid; //loggedin user validation with the person who created the post
+    const {user} = useContext(AuthContext);   //return the data of the person who is logged in and is currently in this page 
+    const sameUser = user?.user_id === userid; //loggedin user validation with the person who created the post
     const router = useRouter();    //hook used to get the query in the route of this page.
     const postid = router.query.pid;    //query present in the route of this page
     const [success,setSuccess] = useState(0);    //update success message
@@ -29,8 +33,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
         skills:[]
     })
 
-    const colRef = collection(db, 'posts');    //refence to the collection of all posts
-    const docRef = doc(colRef,postid);         //referece of the required document from the collection based on the postid
+    const [updatePost,{data,error,loading}] = useMutation(UPDATE_POST);     //refence to the collection of all posts      //referece of the required document from the collection based on the postid
 
     useEffect(() => {
         setNewpost({                           //this hook is called  upon redering this page first time and the values are stored in the variable created above
@@ -68,9 +71,7 @@ function ModifyPost({title,goal,description,duration,weeklyhrs,membercount,skill
     async function handlesubmit(e){         //function updates the data in firebase
         e.preventDefault();
         try{
-            await updateDoc(docRef,{
-                ...newpost
-            })
+            updatePost({variables:{...newpost}});
             setSuccess(1);
             router.push(`/newPost/${postid}`);
         }
