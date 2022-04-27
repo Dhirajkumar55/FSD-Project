@@ -2,7 +2,6 @@ import "../styles/header.css";
 import "../styles/footer.css"
 import {ApolloProvider} from "@apollo/client";
 import {client} from "../graphql/client/clientSetup"
-import {UserAuthProvider} from "../context/UserAuthProvider"
 import {AuthProvider} from "../context/auth"
 
 function MyApp({ Component, pageProps }) {

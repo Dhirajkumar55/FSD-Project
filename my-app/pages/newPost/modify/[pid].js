@@ -1,10 +1,5 @@
 import {useState,useEffect,useContext} from 'react';
 import {useRouter} from 'next/router'
-import {db,auth} from '../../../firebase';
-import styled from 'styled-components';
-import {useAuthState} from "react-firebase-hooks/auth";
-import {useCollection} from "react-firebase-hooks/firestore";
-import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc, updateDoc} from "firebase/firestore";
 import styles from  "../createpost.module.css";
 import Restricted from '../../../components/Restricted';
 import Tooltip from '@mui/material/Tooltip'

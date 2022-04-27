@@ -1,24 +1,20 @@
 
 // const Post = styled.div``;
 
-import { auth, db } from "../../firebase";
+
 import chat from '../../public/chat.svg';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
 import styles from "./index.module.css";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { doc, serverTimestamp, setDoc, query, where, collection, getDocs, getDoc, orderBy, docs } from "firebase/firestore";
 import TimeAgo from "timeago-react";
 import Tooltip from '@mui/material/Tooltip';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import {useRouter} from "next/router";
-import {signOut} from 'firebase/auth'
 import {useQuery} from "@apollo/client"
 import {GET_POSTS,USER_POSTS} from "../../graphql/client/queries"
 import pic from "../../public/profilepic.png"
@@ -536,52 +532,6 @@ function Posts() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-            <div className="col-lg-2">
-              <div
-                className={
-                  (styles.sidebar, styles.trending_section, styles.left_menu)
-                }
-              >
-                {user ? (
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <Image
-                        src={chat}
-                        alt="teamup"
-                        width="500"
-                        height="500"
-                      />
-                      <div
-                        className="col-lg-12"
-                        style={{
-                          marginTop: "40px",
-                          textAlign: "center",
-                        }}
-                      >
-                        <div onClick={()=>{router.push('/chat/1')}} className={styles.button_slide}>
-                          CHAT WITH OTHERS{" "}
-                          <span>
-                            {" "}
-                            <i
-                              className="fab fa-whatsapp"
-                              style={{
-                                color: "blue",
-                                margin_left: "6px",
-                                margin_right: "6px",
-                                fontSize: "20px",
-                              }}
-                            ></i>
-                          </span>{" "}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (<div />)
-
-                }
-
               </div>
             </div>
           </div>

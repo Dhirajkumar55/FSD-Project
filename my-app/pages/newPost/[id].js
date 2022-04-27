@@ -1,6 +1,3 @@
-import { auth, db } from "../../firebase";
-import styled from "styled-components";
-import { useAuthState } from "react-firebase-hooks/auth";
 import worko from "../../public/worko.svg";
 import Image from "next/image";
 import { useState} from "react";
@@ -8,14 +5,10 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import {doc,serverTimestamp,setDoc,query,where,collection,getDocs,getDoc,orderBy,docs,addDoc} from "firebase/firestore";
 import styles from "./singlepost.module.css";
 import { useRouter } from "next/router";
 import Navbar from "../../components/navbar/Navbar";
 import Alert from '@mui/material/Alert';
-import {useCollection} from "react-firebase-hooks/firestore";
-import Tooltip from '@mui/material/Tooltip'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {client} from "../../graphql/client/clientSetup"
 import {GET_POST} from "../../graphql/client/queries"
 import { AuthContext } from '../../context/auth';
@@ -51,14 +44,6 @@ function SinglePost({title,goal,description,duration,weeklyhrs,membercount,skill
 
   function handleApply(e) {                                //this function sends the data to firebase upon clicking submit in apply form
     e.preventDefault();
-    const applyRef = collection(docRef, "AppliedBy");
-    addDoc(applyRef, {
-      ...applyformdata,
-      timestamp: serverTimestamp(),
-      name: user?.displayName,
-      photo: user?.photoURL,
-      userid: user?.email,
-    });
     setMdl(false);
   }
 

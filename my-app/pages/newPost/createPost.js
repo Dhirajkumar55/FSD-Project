@@ -1,9 +1,4 @@
 import {useState} from 'react';
-import {auth,db} from '../../firebase';
-import styled from 'styled-components';
-import {useAuthState} from "react-firebase-hooks/auth";
-import {useCollection} from "react-firebase-hooks/firestore"
-import { doc,serverTimestamp,setDoc, query, where, collection, getDocs,getDoc,orderBy,docs ,addDoc} from "firebase/firestore";
 import styles from  "./createpost.module.css"
 import {useRouter} from 'next/router';
 import Restricted from '../../components/Restricted';

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import image from '../public/accessdenied.svg'
 import Image from 'next/image'
 import {useState} from 'react';
-import {useRouter,useEffect} from 'next/router';
+import {useRouter} from 'next/router';
 
 function Restricted(){
 
