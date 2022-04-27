@@ -2,7 +2,7 @@ import { ApolloClient,createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-    uri: 'https://fsd-project-9rbwhxua5-dhirajkumar55.vercel.app/api/graphqlServer',
+    uri: 'http://localhost:3000/api/graphqlServer',
 });
 
 const authLink = setContext((_, { headers }) => {
