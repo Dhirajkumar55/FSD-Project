@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker-build": "docker build . -t wbd-app && docker run -d -p 3000:3000 wbd-app"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",
