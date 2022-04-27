@@ -5,7 +5,10 @@ import {typeDefs} from '../../graphql/server/typedef';
 import {resolvers} from "../../graphql/server/resolvers/rootResolver";
 import {getUserId} from "../../utils/authorizationMiddleware"
 import { ApolloError } from 'apollo-server-errors';
-const cors = Cors();
+const cors = Cors({
+    methods: ['GET','POST','PUT','DELETE'],
+    origin: "https://fsd-project.vercel.app/"
+});
 
 dbConnect();
 
@@ -44,6 +47,6 @@ export default cors(async function handler(req, res, next) {
 
 export const config = {
     api:{
-        bodyParser:false
+        bodyParser:false,
     }
 };
