@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.2.1",
     "apollo-server-errors": "^3.3.1",
     "apollo-server-micro": "^3.6.7",
+    "apollo-server-plugin-response-cache": "^3.5.2",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "email-validator": "^2.0.4",

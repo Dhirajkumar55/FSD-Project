@@ -4,7 +4,7 @@ import Cors from 'micro-cors';
 import {typeDefs} from '../../graphql/server/typedef';
 import {resolvers} from "../../graphql/server/resolvers/rootResolver";
 import {getUserId} from "../../utils/authorizationMiddleware"
-import { ApolloError } from 'apollo-server-errors';
+import responseCachePlugin from "apollo-server-plugin-response-cache"
 const cors = Cors();
 
 dbConnect();
@@ -25,7 +25,8 @@ const apolloServer = new ApolloServer({
             ...req,
             user
         }
-    }
+    },
+    plugins : [responseCachePlugin()]
 });
 
 const server = apolloServer.start();
