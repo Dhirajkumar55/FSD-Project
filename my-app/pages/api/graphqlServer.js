@@ -7,7 +7,7 @@ import {getUserId} from "../../utils/authorizationMiddleware"
 import { ApolloError } from 'apollo-server-errors';
 const cors = Cors({
     methods: ['GET','POST','PUT','DELETE'],
-    origin: "https://fsd-project.vercel.app/"
+    origin: "*"
 });
 
 dbConnect();
